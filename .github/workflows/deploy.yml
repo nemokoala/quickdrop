@@ -6,11 +6,14 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted # WSL2 runner 사용
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Load env file
+        run: cp ~/.env.quickdrop .env.production
 
       - name: Install dependencies
         run: npm ci
@@ -19,7 +22,9 @@ jobs:
         run: npm run build
 
       - name: Migrate DB
-        run: npx prisma migrate deploy
+        run: |
+          set -a && . ~/.env.quickdrop && set +a
+          npx prisma migrate deploy
 
       - name: Restart app
-        run: pm2 restart quickdrop
+        run: pm2 restart quickdrop || pm2 start npm --name quickdrop -- start
