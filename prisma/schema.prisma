@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  files     File[]
+}
+
+model File {
+  id           Int      @id @default(autoincrement())
+  sessionId    Int
+  session      Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  originalName String
+  storedName   String
+  size         BigInt
+  mimeType     String   @default("application/octet-stream")
+  createdAt    DateTime @default(now())
+
+  @@index([sessionId])
+}

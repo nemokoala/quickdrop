@@ -1,65 +1,130 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useCallback } from "react";
+import { toast } from "sonner";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import UploadZone from "@/components/upload/UploadZone";
+import FileList from "@/components/upload/FileList";
+import ShareResult from "@/components/upload/ShareResult";
+import { useUpload } from "@/queries/upload/mutations";
+import type { UploadResult } from "@/types/quickdrop";
+
+export default function HomePage() {
+  const [files, setFiles] = useState<File[]>([]);
+  const [result, setResult] = useState<UploadResult | null>(null);
+  const { upload, progress, isUploading, reset: resetUpload } = useUpload();
+
+  const handleFilesSelected = useCallback((newFiles: File[]) => {
+    setFiles((prev) => {
+      const existing = new Set(prev.map((f) => f.name + f.size));
+      const deduped = newFiles.filter((f) => !existing.has(f.name + f.size));
+      return [...prev, ...deduped];
+    });
+  }, []);
+
+  const handleRemove = useCallback((index: number) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setFiles([]);
+    setResult(null);
+    resetUpload();
+  }, [resetUpload]);
+
+  const handleUpload = async () => {
+    if (files.length === 0) return;
+    try {
+      const data = await upload(files);
+      setResult(data);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "업로드 실패");
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-12 overflow-x-hidden">
+      <div className="w-full max-w-lg min-w-0">
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold tracking-tight">QuickDrop</h1>
+          <p className="mt-2 text-muted-foreground">
+            로그인 없이 파일을 빠르게 공유하세요
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <Card>
+          <CardHeader className="pb-4">
+            <CardTitle className="text-lg">
+              {result ? "공유 코드" : "파일 업로드"}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {result ? (
+              <ShareResult result={result} onReset={handleReset} />
+            ) : (
+              <div className="flex flex-col gap-4">
+                <UploadZone
+                  onFilesSelected={handleFilesSelected}
+                  disabled={isUploading}
+                />
+                <FileList
+                  files={files}
+                  progress={progress}
+                  isUploading={isUploading}
+                  onRemove={handleRemove}
+                  onUpload={handleUpload}
+                  onReset={handleReset}
+                />
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <div className="relative my-6 flex items-center">
+          <div className="flex-1 border-t border-muted-foreground/20" />
+          <span className="mx-4 text-xs text-muted-foreground">또는</span>
+          <div className="flex-1 border-t border-muted-foreground/20" />
         </div>
-      </main>
+
+        <div className="text-center mb-3">
+          <p className="text-sm font-medium text-muted-foreground">코드로 파일 받기</p>
+        </div>
+
+        <CodeInput />
+      </div>
+    </main>
+  );
+}
+
+function CodeInput() {
+  const [code, setCode] = useState("");
+
+  const handleGo = () => {
+    const trimmed = code.replace(/\D/g, "").slice(0, 6);
+    if (trimmed.length === 6) {
+      window.location.href = `/d/${trimmed}`;
+    }
+  };
+
+  return (
+    <div className="flex gap-2 w-full">
+      <input
+        type="text"
+        inputMode="numeric"
+        placeholder="코드 6자리 입력"
+        maxLength={6}
+        value={code}
+        onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+        onKeyDown={(e) => e.key === "Enter" && handleGo()}
+        className="min-w-0 flex-1 rounded-lg border bg-background px-4 py-2 text-center font-mono text-lg tracking-widest outline-none focus:ring-2 focus:ring-primary"
+      />
+      <button
+        onClick={handleGo}
+        disabled={code.length !== 6}
+        className="shrink-0 rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
+      >
+        받기
+      </button>
     </div>
   );
 }
