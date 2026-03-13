@@ -1,13 +1,17 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import UploadZone from "@/components/upload/UploadZone";
 import FileList from "@/components/upload/FileList";
 import ShareResult from "@/components/upload/ShareResult";
 import { useUpload } from "@/queries/upload/mutations";
 import type { UploadResult } from "@/types/quickdrop";
+import CodeInput from "@/components/shared/CodeInput";
 
 export default function HomePage() {
   const [files, setFiles] = useState<File[]>([]);
@@ -93,38 +97,5 @@ export default function HomePage() {
         <CodeInput />
       </div>
     </main>
-  );
-}
-
-function CodeInput() {
-  const [code, setCode] = useState("");
-
-  const handleGo = () => {
-    const trimmed = code.replace(/\D/g, "").slice(0, 6);
-    if (trimmed.length === 6) {
-      window.location.href = `/d/${trimmed}`;
-    }
-  };
-
-  return (
-    <div className="flex gap-2 w-full">
-      <input
-        type="text"
-        inputMode="numeric"
-        placeholder="코드 6자리 입력"
-        maxLength={6}
-        value={code}
-        onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-        onKeyDown={(e) => e.key === "Enter" && handleGo()}
-        className="min-w-0 flex-1 rounded-lg border bg-background px-4 py-2 text-center font-mono text-lg tracking-widest outline-none focus:ring-2 focus:ring-primary"
-      />
-      <button
-        onClick={handleGo}
-        disabled={code.length !== 6}
-        className="shrink-0 rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
-      >
-        받기
-      </button>
-    </div>
   );
 }
