@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, ArrowRight } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -13,10 +13,10 @@ interface CodeInputProps {
   autoFocus?: boolean;
 }
 
-export default function CodeInput({ 
-  placeholder = "코드 6자리 입력", 
+export default function CodeInput({
+  placeholder = "코드 6자리 입력",
   className,
-  autoFocus = false
+  autoFocus = false,
 }: CodeInputProps) {
   const [code, setCode] = useState("");
   const router = useRouter();
@@ -40,7 +40,9 @@ export default function CodeInput({
           maxLength={6}
           autoFocus={autoFocus}
           value={code}
-          onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+          onChange={(e) =>
+            setCode(e.target.value.replace(/\D/g, "").slice(0, 6))
+          }
           className="pl-10 h-11 text-center font-mono text-lg tracking-widest"
         />
       </div>
