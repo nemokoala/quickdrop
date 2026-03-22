@@ -1,15 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileQuestion, Home } from "lucide-react";
 import CodeInput from "@/components/shared/CodeInput";
 
 export default function NotFound() {
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-12">
       <div className="w-full max-w-md animate-in fade-in zoom-in duration-500">
@@ -34,7 +31,7 @@ export default function NotFound() {
               </p>
             </div>
 
-            <CodeInput placeholder="다른 코드 입력 (6자리)" />
+            <CodeInput />
 
             <div className="flex flex-col gap-3 pt-2">
               <Button

@@ -28,7 +28,7 @@ export default function FileList({
   const totalSize = files.reduce((sum, f) => sum + f.size, 0);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-muted-foreground">
           {files.length}개 파일 · {formatBytes(totalSize)}
@@ -49,7 +49,9 @@ export default function FileList({
             <FileIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">{file.name}</p>
-              <p className="text-xs text-muted-foreground">{formatBytes(file.size)}</p>
+              <p className="text-xs text-muted-foreground">
+                {formatBytes(file.size)}
+              </p>
             </div>
             {!isUploading && (
               <Button
@@ -76,7 +78,7 @@ export default function FileList({
       )}
 
       {!isUploading && (
-        <Button onClick={onUpload} className="w-full" size="lg">
+        <Button onClick={onUpload} className="w-full mt-2" size="lg">
           업로드
         </Button>
       )}
