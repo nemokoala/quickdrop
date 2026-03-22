@@ -3,9 +3,16 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Download } from "lucide-react";
 import UploadZone from "@/components/upload/UploadZone";
 import FileList from "@/components/upload/FileList";
 import ShareResult from "@/components/upload/ShareResult";
@@ -90,11 +97,20 @@ export default function HomePage() {
           <div className="flex-1 border-t border-muted-foreground/20" />
         </div>
 
-        <div className="text-center mb-3">
-          <p className="text-sm font-medium text-muted-foreground">코드로 파일 받기</p>
-        </div>
-
-        <CodeInput />
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Download className="h-5 w-5" />
+              파일 받기
+            </CardTitle>
+            <CardDescription>
+              공유 코드 6자리를 입력하면 바로 다운로드됩니다
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <CodeInput />
+          </CardContent>
+        </Card>
       </div>
     </main>
   );
