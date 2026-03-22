@@ -64,7 +64,7 @@ export default function UploadZone({ onFilesSelected, disabled }: UploadZoneProp
         type="file"
         multiple
         className="hidden"
-        onChange={(e) => handleFiles(e.target.files)}
+        onChange={(e) => { handleFiles(e.target.files); e.target.value = ""; }}
         disabled={disabled}
       />
     </div>
