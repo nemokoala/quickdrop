@@ -16,10 +16,15 @@ import ShareResult from "@/components/upload/ShareResult";
 import { useUpload } from "@/queries/upload/mutations";
 import type { UploadResult } from "@/types/quickdrop";
 import CodeInput from "@/components/shared/CodeInput";
+import {
+  DEFAULT_UPLOAD_EXPIRY_MINUTES,
+  clampUploadExpiryMinutes,
+} from "@/lib/upload-expiry";
 
 export default function HomePage() {
   const [files, setFiles] = useState<File[]>([]);
   const [result, setResult] = useState<UploadResult | null>(null);
+  const [expiryMinutes, setExpiryMinutes] = useState(DEFAULT_UPLOAD_EXPIRY_MINUTES);
   const { upload, progress, isUploading, reset: resetUpload } = useUpload();
 
   const handleFilesSelected = useCallback((newFiles: File[]) => {
@@ -37,13 +42,14 @@ export default function HomePage() {
   const handleReset = useCallback(() => {
     setFiles([]);
     setResult(null);
+    setExpiryMinutes(DEFAULT_UPLOAD_EXPIRY_MINUTES);
     resetUpload();
   }, [resetUpload]);
 
   const handleUpload = async () => {
     if (files.length === 0) return;
     try {
-      const data = await upload(files);
+      const data = await upload(files, expiryMinutes);
       setResult(data);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "업로드 실패");
@@ -79,6 +85,10 @@ export default function HomePage() {
                   files={files}
                   progress={progress}
                   isUploading={isUploading}
+                  expiryMinutes={expiryMinutes}
+                  onExpiryChange={(value) =>
+                    setExpiryMinutes(clampUploadExpiryMinutes(value))
+                  }
                   onRemove={handleRemove}
                   onUpload={handleUpload}
                   onReset={handleReset}

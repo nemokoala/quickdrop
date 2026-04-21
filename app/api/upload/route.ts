@@ -6,7 +6,8 @@ import path from "path";
 import { prisma } from "@/lib/prisma";
 import { generateUniqueCode } from "@/lib/code-generator";
 import { createSessionDir, getFilePath } from "@/lib/storage";
-import { MAX_FILE_SIZE, SESSION_EXPIRY_HOURS } from "@/lib/config";
+import { MAX_FILE_SIZE } from "@/lib/config";
+import { parseUploadExpiryMinutes } from "@/lib/upload-expiry";
 import { Readable } from "stream";
 
 interface ParsedFile {
@@ -118,10 +119,14 @@ function parseMultipart(
 export async function POST(req: NextRequest) {
   const requestId = randomUUID().slice(0, 8);
   const startTime = Date.now();
+  const expiryMinutes = parseUploadExpiryMinutes(
+    req.headers.get("x-expiry-minutes"),
+  );
   try {
     console.log(`[upload][${requestId}] 요청 수신`, new Date().toISOString());
     console.log(`[upload][${requestId}] content-length:`, req.headers.get("content-length"));
     console.log(`[upload][${requestId}] content-type:`, req.headers.get("content-type"));
+    console.log(`[upload][${requestId}] expiry-minutes:`, expiryMinutes);
 
     const code = await generateUniqueCode();
     console.log(`[upload][${requestId}] 세션 코드 생성: ${code}`);
@@ -134,9 +139,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No files uploaded" }, { status: 400 });
     }
 
-    const expiresAt = new Date(
-      Date.now() + SESSION_EXPIRY_HOURS * 60 * 60 * 1000,
-    );
+    const expiresAt = new Date(Date.now() + expiryMinutes * 60 * 1000);
 
     console.log(`[upload][${requestId}] DB 저장 시작`);
     const session = await prisma.session.create({

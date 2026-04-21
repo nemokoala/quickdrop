@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx shadcn@latest add input-otp --yes)",
+      "Bash(npx shadcn@latest add dialog --yes)"
+    ]
+  }
+}
