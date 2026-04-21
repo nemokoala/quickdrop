@@ -11,10 +11,10 @@ interface FileTableProps {
 
 export default function FileTable({ files }: FileTableProps) {
   const handleDownload = (file: FileInfo) => {
-    const a = document.createElement("a");
-    a.href = `/api/download/${file.id}`;
-    a.download = file.originalName;
-    a.click();
+    const anchor = document.createElement("a");
+    anchor.href = `/api/download/${file.id}`;
+    anchor.download = file.originalName;
+    anchor.click();
   };
 
   return (
@@ -34,6 +34,7 @@ export default function FileTable({ files }: FileTableProps) {
             size="icon"
             className="h-8 w-8 shrink-0"
             onClick={() => handleDownload(file)}
+            aria-label={`${file.originalName} 다운로드`}
           >
             <Download className="h-4 w-4" />
           </Button>

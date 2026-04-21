@@ -145,6 +145,7 @@ export async function POST(req: NextRequest) {
     const session = await prisma.session.create({
       data: {
         code,
+        kind: "file",
         expiresAt,
         files: {
           create: files.map((f) => ({
@@ -161,6 +162,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       code: session.code,
+      kind: "file",
       expiresAt: session.expiresAt.toISOString(),
       files: session.files.map((f) => ({
         id: f.id,
@@ -168,6 +170,7 @@ export async function POST(req: NextRequest) {
         size: Number(f.size),
         mimeType: f.mimeType,
       })),
+      text: null,
     });
   } catch (err) {
     console.error(`[upload][${requestId}] 오류 (${Date.now() - startTime}ms 경과):`, err);

@@ -1,10 +1,15 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import type { UploadResult, UploadProgress } from "@/types/quickdrop";
+import { useCallback, useState } from "react";
+import type { UploadProgress, UploadResult } from "@/types/quickdrop";
 
 interface UseUploadReturn {
-  upload: (files: File[], expiryMinutes: number) => Promise<UploadResult>;
+  uploadFiles: (files: File[], expiryMinutes: number) => Promise<UploadResult>;
+  uploadText: (
+    content: string,
+    title: string,
+    expiryMinutes: number,
+  ) => Promise<UploadResult>;
   progress: UploadProgress | null;
   isUploading: boolean;
   reset: () => void;
@@ -19,7 +24,7 @@ export function useUpload(): UseUploadReturn {
     setIsUploading(false);
   }, []);
 
-  const upload = useCallback(
+  const uploadFiles = useCallback(
     (files: File[], expiryMinutes: number): Promise<UploadResult> => {
       return new Promise((resolve, reject) => {
         const formData = new FormData();
@@ -27,32 +32,33 @@ export function useUpload(): UseUploadReturn {
 
         const xhr = new XMLHttpRequest();
 
-        xhr.upload.addEventListener("progress", (e) => {
-          if (e.lengthComputable) {
-            setProgress({
-              percent: Math.round((e.loaded / e.total) * 100),
-              loaded: e.loaded,
-              total: e.total,
-            });
-          }
+        xhr.upload.addEventListener("progress", (event) => {
+          if (!event.lengthComputable) return;
+
+          setProgress({
+            percent: Math.round((event.loaded / event.total) * 100),
+            loaded: event.loaded,
+            total: event.total,
+          });
         });
 
         xhr.addEventListener("load", () => {
           setIsUploading(false);
+
           if (xhr.status >= 200 && xhr.status < 300) {
             try {
-              const data = JSON.parse(xhr.responseText) as UploadResult;
-              resolve(data);
+              resolve(JSON.parse(xhr.responseText) as UploadResult);
             } catch {
               reject(new Error("Invalid server response"));
             }
-          } else {
-            try {
-              const err = JSON.parse(xhr.responseText);
-              reject(new Error(err.error || "Upload failed"));
-            } catch {
-              reject(new Error(`Upload failed with status ${xhr.status}`));
-            }
+            return;
+          }
+
+          try {
+            const error = JSON.parse(xhr.responseText) as { error?: string };
+            reject(new Error(error.error || "Upload failed"));
+          } catch {
+            reject(new Error(`Upload failed with status ${xhr.status}`));
           }
         });
 
@@ -76,5 +82,47 @@ export function useUpload(): UseUploadReturn {
     [],
   );
 
-  return { upload, progress, isUploading, reset };
+  const uploadText = useCallback(
+    async (
+      content: string,
+      title: string,
+      expiryMinutes: number,
+    ): Promise<UploadResult> => {
+      setIsUploading(true);
+      setProgress(null);
+
+      try {
+        const response = await fetch("/api/text", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            content,
+            title,
+            expiryMinutes,
+          }),
+        });
+
+        const payload = (await response.json()) as UploadResult & {
+          error?: string;
+        };
+
+        if (!response.ok) {
+          throw new Error(payload.error || "Text upload failed");
+        }
+
+        return payload;
+      } catch (error) {
+        throw error instanceof Error
+          ? error
+          : new Error("Network error during upload");
+      } finally {
+        setIsUploading(false);
+      }
+    },
+    [],
+  );
+
+  return { uploadFiles, uploadText, progress, isUploading, reset };
 }

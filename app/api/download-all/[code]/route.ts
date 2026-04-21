@@ -24,6 +24,13 @@ export async function GET(
     return NextResponse.json({ error: "Code expired" }, { status: 410 });
   }
 
+  if (session.kind !== "file") {
+    return NextResponse.json(
+      { error: "ZIP download is only available for file shares" },
+      { status: 400 },
+    );
+  }
+
   const passThrough = new PassThrough();
   const archive = archiver("zip", { zlib: { level: 5 } });
 

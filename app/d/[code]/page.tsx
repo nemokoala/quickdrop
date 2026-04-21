@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import DownloadPageClient from "./DownloadPageClient";
@@ -23,17 +24,29 @@ export default async function DownloadPage({ params }: PageProps) {
   return (
     <DownloadPageClient
       code={code}
+      kind={session.kind === "text" ? "text" : "file"}
       expiresAt={session.expiresAt.toISOString()}
       expired={expired}
       files={
-        expired
+        expired || session.kind !== "file"
           ? []
-          : session.files.map((f) => ({
-              id: f.id,
-              originalName: f.originalName,
-              size: Number(f.size),
-              mimeType: f.mimeType,
+          : session.files.map((file) => ({
+              id: file.id,
+              originalName: file.originalName,
+              size: Number(file.size),
+              mimeType: file.mimeType,
             }))
+      }
+      text={
+        expired || session.kind !== "text" || !session.textContent
+          ? null
+          : {
+              title: session.textTitle || "shared-text.txt",
+              content: session.textContent,
+              size:
+                session.textSize ??
+                Buffer.byteLength(session.textContent, "utf8"),
+            }
       }
     />
   );

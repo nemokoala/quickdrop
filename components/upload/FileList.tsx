@@ -41,12 +41,13 @@ export default function FileList({
   onReset,
 }: FileListProps) {
   const [overlayUrl, setOverlayUrl] = useState<string | null>(null);
+
   const previews = useMemo(() => {
     const urls: Record<string, string> = {};
 
     files.forEach((file) => {
       if (file.type.startsWith("image/")) {
-        urls[file.name + file.size] = URL.createObjectURL(file);
+        urls[`${file.name}-${file.size}`] = URL.createObjectURL(file);
       }
     });
 
@@ -68,7 +69,7 @@ export default function FileList({
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-muted-foreground">
-            파일 {files.length}개, {formatBytes(totalSize)}
+            파일 {files.length}개 / {formatBytes(totalSize)}
           </span>
           {!isUploading && (
             <Button variant="ghost" size="sm" onClick={onReset}>
@@ -78,50 +79,54 @@ export default function FileList({
         </div>
 
         <ul className="flex max-h-60 flex-col gap-2 overflow-y-auto">
-          {files.map((file, index) => (
-            <li
-              key={`${file.name}-${index}`}
-              className="flex items-center gap-3 rounded-lg bg-muted/40 px-3 py-2"
-            >
-              {previews[file.name + file.size] ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={previews[file.name + file.size]}
-                  alt={file.name}
-                  className="h-8 w-8 shrink-0 cursor-zoom-in rounded object-cover"
-                  onClick={() => setOverlayUrl(previews[file.name + file.size])}
-                />
-              ) : (
-                <FileIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
-              )}
+          {files.map((file, index) => {
+            const previewUrl = previews[`${file.name}-${file.size}`];
 
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium">{file.name}</p>
-                <p className="text-xs text-muted-foreground">
-                  {formatBytes(file.size)}
-                </p>
-              </div>
+            return (
+              <li
+                key={`${file.name}-${index}`}
+                className="flex items-center gap-3 rounded-lg bg-muted/40 px-3 py-2"
+              >
+                {previewUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={previewUrl}
+                    alt={file.name}
+                    className="h-8 w-8 shrink-0 cursor-zoom-in rounded object-cover"
+                    onClick={() => setOverlayUrl(previewUrl)}
+                  />
+                ) : (
+                  <FileIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
+                )}
 
-              {!isUploading && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-6 w-6 shrink-0"
-                  onClick={() => onRemove(index)}
-                >
-                  <X className="h-3 w-3" />
-                </Button>
-              )}
-            </li>
-          ))}
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium">{file.name}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {formatBytes(file.size)}
+                  </p>
+                </div>
+
+                {!isUploading && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6 shrink-0"
+                    onClick={() => onRemove(index)}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <div className="rounded-lg border bg-background/70 px-4 py-3">
           <div className="mb-2 flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm font-medium">만료시간</p>
+              <p className="text-sm font-medium">만료 시간</p>
               <p className="text-xs text-muted-foreground">
-                업로드 후 {formatUploadExpiryMinutes(expiryMinutes)} 뒤 만료
+                업로드 후 {formatUploadExpiryMinutes(expiryMinutes)} 뒤 자동 삭제
               </p>
             </div>
             <span className="rounded-md bg-muted px-2 py-1 text-sm font-semibold">
@@ -135,10 +140,10 @@ export default function FileList({
             max={MAX_UPLOAD_EXPIRY_MINUTES}
             step={UPLOAD_EXPIRY_STEP_MINUTES}
             value={expiryMinutes}
-            onChange={(e) => onExpiryChange(Number(e.target.value))}
+            onChange={(event) => onExpiryChange(Number(event.target.value))}
             disabled={isUploading}
             className="h-2 w-full cursor-pointer accent-primary disabled:cursor-not-allowed"
-            aria-label="업로드 만료시간"
+            aria-label="업로드 만료 시간"
           />
 
           <div className="mt-2 flex justify-between text-xs text-muted-foreground">
@@ -170,7 +175,7 @@ export default function FileList({
       >
         <DialogContent
           showCloseButton={false}
-          className="w-fit max-w-[90vw] border-none bg-transparent p-0 shadow-none place-items-center sm:max-w-[90vw]"
+          className="place-items-center border-none bg-transparent p-0 shadow-none sm:max-w-[90vw]"
         >
           <DialogTitle className="sr-only">이미지 미리보기</DialogTitle>
           {overlayUrl && (
@@ -181,7 +186,7 @@ export default function FileList({
                 alt="미리보기"
                 className="block max-h-[85vh] max-w-[90vw] rounded-lg object-contain"
               />
-              <DialogClose className="absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-black/80">
+              <DialogClose className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-black/80">
                 <X className="h-4 w-4" />
               </DialogClose>
             </div>

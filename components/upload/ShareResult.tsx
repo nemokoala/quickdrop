@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import QRCodeSVG from "react-qr-code";
-import { Copy, Check, RefreshCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Check, Copy, RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/lib/config";
-import { formatExpiry } from "@/lib/format";
+import { formatBytes, formatExpiry } from "@/lib/format";
 import type { UploadResult } from "@/types/quickdrop";
 
 interface ShareResultProps {
@@ -17,12 +17,17 @@ interface ShareResultProps {
 
 export default function ShareResult({ result, onReset }: ShareResultProps) {
   const [copied, setCopied] = useState(false);
-  const downloadUrl = `${BASE_URL}/d/${result.code}`;
+  const shareUrl = `${BASE_URL}/d/${result.code}`;
 
-  const copyCode = async () => {
+  const summary =
+    result.kind === "text" && result.text
+      ? `${result.text.title} / ${formatBytes(result.text.size)}`
+      : `파일 ${result.files.length}개`;
+
+  const handleCopyCode = async () => {
     await navigator.clipboard.writeText(result.code);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    window.setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -31,15 +36,18 @@ export default function ShareResult({ result, onReset }: ShareResultProps) {
         <Badge variant="outline" className="mb-2 text-xs">
           {formatExpiry(result.expiresAt)}
         </Badge>
-        <p className="text-sm text-muted-foreground">아래 코드를 상대방에게 알려주세요</p>
+        <p className="text-sm text-muted-foreground">
+          아래 코드나 링크를 상대방에게 전달하세요.
+        </p>
+        <p className="mt-1 text-xs text-muted-foreground">{summary}</p>
       </div>
 
-      {/* 6자리 코드 */}
+      {/* 6자리 공유 코드 */}
       <div className="flex items-center gap-3">
         <span className="font-mono text-5xl font-bold tracking-widest">
           {result.code}
         </span>
-        <Button variant="outline" size="icon" onClick={copyCode}>
+        <Button variant="outline" size="icon" onClick={handleCopyCode}>
           {copied ? (
             <Check className="h-4 w-4 text-green-500" />
           ) : (
@@ -50,13 +58,13 @@ export default function ShareResult({ result, onReset }: ShareResultProps) {
 
       <Separator className="w-full" />
 
-      {/* QR 코드 */}
+      {/* QR 코드 및 공유 링크 */}
       <div className="flex flex-col items-center gap-2">
-        <p className="text-xs text-muted-foreground">또는 QR 코드 스캔</p>
+        <p className="text-xs text-muted-foreground">QR 코드 또는 링크로 열기</p>
         <div className="rounded-xl border bg-white p-3 shadow-sm">
-          <QRCodeSVG value={downloadUrl} size={180} />
+          <QRCodeSVG value={shareUrl} size={180} />
         </div>
-        <p className="text-xs text-muted-foreground break-all">{downloadUrl}</p>
+        <p className="break-all text-xs text-muted-foreground">{shareUrl}</p>
       </div>
 
       <Button variant="outline" onClick={onReset} className="gap-2">

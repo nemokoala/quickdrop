@@ -1,0 +1,4 @@
+ALTER TABLE "Session" ADD COLUMN "kind" TEXT NOT NULL DEFAULT 'file';
+ALTER TABLE "Session" ADD COLUMN "textTitle" TEXT;
+ALTER TABLE "Session" ADD COLUMN "textContent" TEXT;
+ALTER TABLE "Session" ADD COLUMN "textSize" INTEGER;

@@ -1,9 +1,10 @@
+import { Buffer } from "node:buffer";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ code: string }> }
+  { params }: { params: Promise<{ code: string }> },
 ) {
   const { code } = await params;
 
@@ -22,13 +23,27 @@ export async function GET(
 
   return NextResponse.json({
     code: session.code,
+    kind: session.kind === "text" ? "text" : "file",
     createdAt: session.createdAt.toISOString(),
     expiresAt: session.expiresAt.toISOString(),
-    files: session.files.map((f) => ({
-      id: f.id,
-      originalName: f.originalName,
-      size: Number(f.size),
-      mimeType: f.mimeType,
-    })),
+    files:
+      session.kind === "file"
+        ? session.files.map((file) => ({
+            id: file.id,
+            originalName: file.originalName,
+            size: Number(file.size),
+            mimeType: file.mimeType,
+          }))
+        : [],
+    text:
+      session.kind === "text" && session.textContent
+        ? {
+            title: session.textTitle || "shared-text.txt",
+            content: session.textContent,
+            size:
+              session.textSize ??
+              Buffer.byteLength(session.textContent, "utf8"),
+          }
+        : null,
   });
 }

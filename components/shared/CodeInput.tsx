@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   InputOTP,
   InputOTPGroup,
@@ -23,8 +23,8 @@ export default function CodeInput({
   const [code, setCode] = useState("");
   const router = useRouter();
 
-  const handleGo = (e?: React.FormEvent) => {
-    e?.preventDefault();
+  const handleGo = (event?: FormEvent) => {
+    event?.preventDefault();
     if (code.length === 6) {
       router.push(`/d/${code}`);
     }
@@ -35,18 +35,18 @@ export default function CodeInput({
       onSubmit={handleGo}
       className={cn("flex flex-col items-center gap-4", className)}
     >
-      <div className="flex items-center gap-2 relative">
+      <div className="relative flex items-center gap-2">
         <InputOTP
           maxLength={6}
           value={code}
           onChange={setCode}
           autoFocus={autoFocus}
         >
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <InputOTPGroup key={i}>
+          {[0, 1, 2, 3, 4, 5].map((index) => (
+            <InputOTPGroup key={index}>
               <InputOTPSlot
-                index={i}
-                className="h-12 w-12 text-lg font-mono bg-background outline-black"
+                index={index}
+                className="h-12 w-12 bg-background text-lg font-mono outline-black"
               />
             </InputOTPGroup>
           ))}
@@ -57,10 +57,10 @@ export default function CodeInput({
           size="icon"
           onClick={() => setCode("")}
           className={cn(
-            "absolute -right-10 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full transition-opacity hover:bg-muted-foreground/10 active:bg-muted-foreground/20 dark:hover:bg-muted-foreground/30 dark:active:bg-muted-foreground/40",
-            code.length === 0 ? "opacity-0 pointer-events-none" : "opacity-100",
+            "absolute -right-10 top-1/2 h-8 w-8 -translate-y-1/2 rounded-full transition-opacity hover:bg-muted-foreground/10 active:bg-muted-foreground/20 dark:hover:bg-muted-foreground/30 dark:active:bg-muted-foreground/40",
+            code.length === 0 ? "pointer-events-none opacity-0" : "opacity-100",
           )}
-          aria-label="초기화"
+          aria-label="코드 지우기"
         >
           <X className="h-4 w-4" />
         </Button>
@@ -68,9 +68,9 @@ export default function CodeInput({
       <Button
         type="submit"
         disabled={code.length !== 6}
-        className="w-full h-11 font-semibold mt-4"
+        className="mt-4 h-11 w-full font-semibold"
       >
-        다운로드
+        열기
       </Button>
     </form>
   );
