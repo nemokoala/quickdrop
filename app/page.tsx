@@ -9,6 +9,7 @@ import ShareResult from "@/components/upload/ShareResult";
 import TextUploadForm from "@/components/upload/TextUploadForm";
 import CodeInput from "@/components/shared/CodeInput";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
@@ -76,7 +77,9 @@ export default function HomePage() {
 
       setResult(await uploadText(textContent, textTitle, expiryMinutes));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "업로드에 실패했습니다.");
+      toast.error(
+        error instanceof Error ? error.message : "업로드에 실패했습니다.",
+      );
     }
   }, [
     expiryMinutes,
@@ -89,7 +92,7 @@ export default function HomePage() {
   ]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center overflow-x-hidden bg-background px-4 py-12">
+    <main className="flex min-h-screen flex-col items-center justify-start pt-[10vh] md:pt-[15vh] overflow-x-hidden bg-background px-4 pb-12">
       <div className="w-full max-w-lg min-w-0">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold tracking-tight">QuickDrop</h1>
@@ -98,104 +101,120 @@ export default function HomePage() {
           </p>
         </div>
 
-        <Card>
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg">
-              {result
-                ? "공유 코드"
-                : mode === "file"
-                  ? "파일 업로드"
-                  : "텍스트 공유"}
-            </CardTitle>
-            {!result && (
-              <CardDescription>
-                파일 공유와 텍스트 공유를 전환해서 사용할 수 있습니다.
-              </CardDescription>
-            )}
-          </CardHeader>
-          <CardContent>
-            {result ? (
-              <ShareResult result={result} onReset={handleReset} />
-            ) : (
-              <div className="flex flex-col gap-4">
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    type="button"
-                    variant={mode === "file" ? "default" : "outline"}
-                    onClick={() => setMode("file")}
-                    disabled={isUploading}
-                  >
-                    파일
-                  </Button>
-                  <Button
-                    type="button"
-                    variant={mode === "text" ? "default" : "outline"}
-                    onClick={() => setMode("text")}
-                    disabled={isUploading}
-                  >
-                    텍스트
-                  </Button>
-                </div>
+        <Tabs defaultValue="send" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-6 min-h-10 rounded-xl">
+            <TabsTrigger
+              value="send"
+              className="rounded-lg font-semibold text-sm h-full"
+            >
+              공유하기
+            </TabsTrigger>
+            <TabsTrigger
+              value="receive"
+              className="rounded-lg font-semibold text-sm h-full"
+            >
+              가져오기
+            </TabsTrigger>
+          </TabsList>
 
-                {mode === "file" ? (
-                  <>
-                    <UploadZone
-                      onFilesSelected={handleFilesSelected}
-                      disabled={isUploading}
-                    />
-                    <FileList
-                      files={files}
-                      progress={progress}
-                      isUploading={isUploading}
-                      expiryMinutes={expiryMinutes}
-                      onExpiryChange={(value) =>
-                        setExpiryMinutes(clampUploadExpiryMinutes(value))
-                      }
-                      onRemove={handleRemove}
-                      onUpload={handleUpload}
-                      onReset={handleReset}
-                    />
-                  </>
-                ) : (
-                  <TextUploadForm
-                    title={textTitle}
-                    content={textContent}
-                    expiryMinutes={expiryMinutes}
-                    isUploading={isUploading}
-                    onTitleChange={setTextTitle}
-                    onContentChange={setTextContent}
-                    onExpiryChange={(value) =>
-                      setExpiryMinutes(clampUploadExpiryMinutes(value))
-                    }
-                    onUpload={handleUpload}
-                    onReset={handleReset}
-                  />
+          <TabsContent value="send" className="mt-0">
+            <Card className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg">
+                  {result
+                    ? "공유 코드"
+                    : mode === "file"
+                      ? "파일 업로드"
+                      : "텍스트 공유"}
+                </CardTitle>
+                {!result && (
+                  <CardDescription>
+                    파일 공유와 텍스트 공유를 전환해서 사용할 수 있습니다.
+                  </CardDescription>
                 )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+              </CardHeader>
+              <CardContent>
+                {result ? (
+                  <ShareResult result={result} onReset={handleReset} />
+                ) : (
+                  <div className="flex flex-col gap-4">
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button
+                        type="button"
+                        variant={mode === "file" ? "default" : "outline"}
+                        onClick={() => setMode("file")}
+                        disabled={isUploading}
+                      >
+                        파일
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={mode === "text" ? "default" : "outline"}
+                        onClick={() => setMode("text")}
+                        disabled={isUploading}
+                      >
+                        텍스트
+                      </Button>
+                    </div>
 
-        <div className="relative my-6 flex items-center">
-          <div className="flex-1 border-t border-muted-foreground/20" />
-          <span className="mx-4 text-xs text-muted-foreground">또는</span>
-          <div className="flex-1 border-t border-muted-foreground/20" />
-        </div>
+                    {mode === "file" ? (
+                      <>
+                        <UploadZone
+                          onFilesSelected={handleFilesSelected}
+                          disabled={isUploading}
+                        />
+                        <FileList
+                          files={files}
+                          progress={progress}
+                          isUploading={isUploading}
+                          expiryMinutes={expiryMinutes}
+                          onExpiryChange={(value) =>
+                            setExpiryMinutes(clampUploadExpiryMinutes(value))
+                          }
+                          onRemove={handleRemove}
+                          onUpload={handleUpload}
+                          onReset={handleReset}
+                        />
+                      </>
+                    ) : (
+                      <TextUploadForm
+                        title={textTitle}
+                        content={textContent}
+                        expiryMinutes={expiryMinutes}
+                        isUploading={isUploading}
+                        onTitleChange={setTextTitle}
+                        onContentChange={setTextContent}
+                        onExpiryChange={(value) =>
+                          setExpiryMinutes(clampUploadExpiryMinutes(value))
+                        }
+                        onUpload={handleUpload}
+                        onReset={handleReset}
+                      />
+                    )}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Download className="h-5 w-5" />
-              공유 열기
-            </CardTitle>
-            <CardDescription>
-              6자리 공유 코드를 입력하면 파일을 받거나 텍스트를 복사할 수 있습니다.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <CodeInput />
-          </CardContent>
-        </Card>
+          <TabsContent value="receive" className="mt-0">
+            <Card className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Download className="h-5 w-5" />
+                  공유 열기
+                </CardTitle>
+                <CardDescription>
+                  6자리 공유 코드를 입력하면 파일을 받거나 텍스트를 복사할 수
+                  있습니다.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <CodeInput />
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </main>
   );
