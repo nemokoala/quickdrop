@@ -27,10 +27,9 @@ export const BASE_URL =
 /** 공유 코드 길이 */
 export const CODE_LENGTH = 6;
 
-/** 텍스트 공유 최대 크기 (bytes). 기본값 100KB */
+/** 텍스트 공유 최대 크기 (bytes). 기본값 50MB */
 export const MAX_TEXT_BYTES =
-  Number(process.env.MAX_TEXT_BYTES) || 100 * 1024;
+  Number(process.env.MAX_TEXT_BYTES) || 50 * 1024 * 1024;
 
 /** MAX_TEXT_BYTES를 사람이 읽기 쉬운 문자열로 표시할 때 사용 */
-export const MAX_TEXT_BYTES_LABEL =
-  process.env.MAX_TEXT_BYTES_LABEL || "100 KB";
+export const MAX_TEXT_BYTES_LABEL = process.env.MAX_TEXT_BYTES_LABEL || "50 MB";
