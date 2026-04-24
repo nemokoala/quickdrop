@@ -93,15 +93,12 @@ export default function HomePage() {
   ]);
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-start overflow-x-hidden bg-background px-4 pb-12 pt-[10vh] md:pt-[15vh]">
+    <main className="relative flex min-h-dvh flex-col items-center justify-start overflow-x-hidden bg-background px-4 pb-12 pt-[10vh] md:pt-[15vh]">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 -top-48 mx-auto h-104 w-104 rounded-full bg-primary/15 blur-3xl"
       />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-24 -bottom-40 h-80 w-80 rounded-full bg-accent/20 blur-3xl"
-      />
+
       <div className="relative z-10 w-full max-w-lg min-w-0">
         <div className="mb-8 text-center">
           <Image
@@ -119,7 +116,7 @@ export default function HomePage() {
         </div>
 
         <Tabs defaultValue="send" className="w-full">
-          <TabsList className="mb-6 grid min-h-10 w-full grid-cols-2 rounded-xl bg-primary/10 p-1">
+          <TabsList className="mb-6 grid min-h-12 w-full grid-cols-2 rounded-xl bg-primary/10 p-1">
             <TabsTrigger
               value="send"
               className="h-full rounded-lg text-sm font-semibold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
@@ -136,7 +133,7 @@ export default function HomePage() {
 
           <TabsContent value="send" className="mt-0">
             <Card className="animate-in border-primary/20 bg-card/95 shadow-lg shadow-primary/10 fade-in slide-in-from-bottom-2 duration-300 backdrop-blur">
-              <CardHeader className="pb-4">
+              <CardHeader className="pb-0">
                 <CardTitle className="text-lg">
                   {result
                     ? "공유 코드"
@@ -154,7 +151,7 @@ export default function HomePage() {
                 {result ? (
                   <ShareResult result={result} onReset={handleReset} />
                 ) : (
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-8">
                     <div className="grid grid-cols-2 gap-2">
                       <Button
                         type="button"

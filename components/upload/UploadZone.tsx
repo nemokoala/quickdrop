@@ -57,9 +57,12 @@ export default function UploadZone({
         <Upload className="h-8 w-8 text-primary" />
       </div>
       <div className="text-center">
-        <p className="text-base font-medium">파일을 끌어놓거나 클릭해서 선택하세요</p>
+        <p className="text-base font-medium">
+          파일을 끌어놓거나 클릭해서 선택하세요
+        </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          여러 파일을 올릴 수 있고, 파일당 최대 {MAX_FILE_SIZE_LABEL}까지 지원합니다.
+          여러 파일을 올릴 수 있고, 파일당 최대 {MAX_FILE_SIZE_LABEL}까지
+          지원합니다.
         </p>
       </div>
       <input

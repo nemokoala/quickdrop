@@ -72,7 +72,7 @@ export default function FileList({
             파일 {files.length}개 / {formatBytes(totalSize)}
           </span>
           {!isUploading && (
-            <Button variant="ghost" size="sm" onClick={onReset}>
+            <Button variant="outline" size="sm" onClick={onReset}>
               모두 제거
             </Button>
           )}
@@ -126,7 +126,8 @@ export default function FileList({
             <div>
               <p className="text-sm font-medium">만료 시간</p>
               <p className="text-xs text-muted-foreground">
-                업로드 후 {formatUploadExpiryMinutes(expiryMinutes)} 뒤 자동 삭제
+                업로드 후 {formatUploadExpiryMinutes(expiryMinutes)} 뒤 자동
+                삭제
               </p>
             </div>
             <span className="rounded-md bg-muted px-2 py-1 text-sm font-semibold">
@@ -163,7 +164,7 @@ export default function FileList({
         )}
 
         {!isUploading && (
-          <Button onClick={onUpload} className="mt-2 w-full" size="lg">
+          <Button onClick={onUpload} className="w-full" size="lg">
             업로드
           </Button>
         )}
