@@ -93,8 +93,16 @@ export default function HomePage() {
   ]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start pt-[10vh] md:pt-[15vh] overflow-x-hidden bg-background px-4 pb-12">
-      <div className="w-full max-w-lg min-w-0">
+    <main className="relative flex min-h-screen flex-col items-center justify-start overflow-x-hidden bg-background px-4 pb-12 pt-[10vh] md:pt-[15vh]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 -top-48 mx-auto h-104 w-104 rounded-full bg-primary/15 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 -bottom-40 h-80 w-80 rounded-full bg-accent/20 blur-3xl"
+      />
+      <div className="relative z-10 w-full max-w-lg min-w-0">
         <div className="mb-8 text-center">
           <Image
             src="/icon.svg"
@@ -102,7 +110,7 @@ export default function HomePage() {
             aria-hidden="true"
             width={72}
             height={72}
-            className="mx-auto mb-4 h-18 w-18 rounded-2xl shadow-lg shadow-primary/15"
+            className="mx-auto mb-4 h-18 w-18 rounded-2xl ring-1 ring-primary/30 shadow-xl shadow-primary/25"
           />
           <h1 className="text-4xl font-bold tracking-tight">QuickDrop</h1>
           <p className="mt-2 text-muted-foreground">
@@ -111,23 +119,23 @@ export default function HomePage() {
         </div>
 
         <Tabs defaultValue="send" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6 min-h-10 rounded-xl">
+          <TabsList className="mb-6 grid min-h-10 w-full grid-cols-2 rounded-xl bg-primary/10 p-1">
             <TabsTrigger
               value="send"
-              className="rounded-lg font-semibold text-sm h-full"
+              className="h-full rounded-lg text-sm font-semibold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
             >
               공유하기
             </TabsTrigger>
             <TabsTrigger
               value="receive"
-              className="rounded-lg font-semibold text-sm h-full"
+              className="h-full rounded-lg text-sm font-semibold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
             >
               가져오기
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="send" className="mt-0">
-            <Card className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <Card className="animate-in border-primary/20 bg-card/95 shadow-lg shadow-primary/10 fade-in slide-in-from-bottom-2 duration-300 backdrop-blur">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg">
                   {result
@@ -207,10 +215,10 @@ export default function HomePage() {
           </TabsContent>
 
           <TabsContent value="receive" className="mt-0">
-            <Card className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <Card className="animate-in border-primary/20 bg-card/95 shadow-lg shadow-primary/10 fade-in slide-in-from-bottom-2 duration-300 backdrop-blur">
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-lg">
-                  <Download className="h-5 w-5" />
+                  <Download className="h-5 w-5 text-primary" />
                   공유 열기
                 </CardTitle>
                 <CardDescription>
