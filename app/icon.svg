@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="QuickDrop file transfer icon">
+  <defs>
+    <linearGradient id="bg" x1="86" x2="426" y1="74" y2="438" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00C2A8" />
+      <stop offset="0.52" stop-color="#1677FF" />
+      <stop offset="1" stop-color="#21325B" />
+    </linearGradient>
+    <linearGradient id="file" x1="166" x2="336" y1="130" y2="358" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" />
+      <stop offset="1" stop-color="#DCEAFF" />
+    </linearGradient>
+    <filter id="shadow" x="80" y="76" width="352" height="368" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" flood-color="#062047" flood-opacity="0.28" stdDeviation="18" />
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#bg)" />
+  <path fill="#FFFFFF" fill-opacity="0.16" d="M84 190c56-88 154-132 252-98 55 19 96 59 119 111v197a112 112 0 0 1-112 112H112A112 112 0 0 1 0 400v-78c16-48 42-92 84-132Z" />
+
+  <g filter="url(#shadow)">
+    <path fill="url(#file)" d="M171 100h118l82 82v206a24 24 0 0 1-24 24H171a24 24 0 0 1-24-24V124a24 24 0 0 1 24-24Z" />
+    <path fill="#BBD3FF" d="M289 100v58a24 24 0 0 0 24 24h58l-82-82Z" />
+    <path fill="#0B5DCE" d="M256 213a18 18 0 0 1 18 18v72l20-20a18 18 0 1 1 26 26l-51 51a18 18 0 0 1-26 0l-51-51a18 18 0 0 1 26-26l20 20v-72a18 18 0 0 1 18-18Z" />
+    <path fill="#0B5DCE" fill-opacity="0.18" d="M198 367h116a14 14 0 1 1 0 28H198a14 14 0 1 1 0-28Z" />
+  </g>
+
+  <path fill="#FFFFFF" fill-opacity="0.9" d="M112 250a17 17 0 0 1 17-17h46a17 17 0 0 1 0 34h-5l18 18a17 17 0 0 1-24 24l-47-47a17 17 0 0 1-5-12Zm288 0a17 17 0 0 1-5 12l-47 47a17 17 0 0 1-24-24l18-18h-5a17 17 0 0 1 0-34h46a17 17 0 0 1 17 17Z" />
+</svg>

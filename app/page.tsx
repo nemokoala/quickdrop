@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import Image from "next/image";
 import { Download } from "lucide-react";
 import { toast } from "sonner";
 import UploadZone from "@/components/upload/UploadZone";
@@ -95,6 +96,14 @@ export default function HomePage() {
     <main className="flex min-h-screen flex-col items-center justify-start pt-[10vh] md:pt-[15vh] overflow-x-hidden bg-background px-4 pb-12">
       <div className="w-full max-w-lg min-w-0">
         <div className="mb-8 text-center">
+          <Image
+            src="/icon.svg"
+            alt=""
+            aria-hidden="true"
+            width={72}
+            height={72}
+            className="mx-auto mb-4 h-18 w-18 rounded-2xl shadow-lg shadow-primary/15"
+          />
           <h1 className="text-4xl font-bold tracking-tight">QuickDrop</h1>
           <p className="mt-2 text-muted-foreground">
             로그인 없이 파일이나 텍스트를 빠르게 공유하세요.

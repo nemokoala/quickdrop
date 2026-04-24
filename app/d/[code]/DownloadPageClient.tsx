@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Check, Clock, Copy } from "lucide-react";
 import DownloadActions from "@/components/download/DownloadActions";
 import FileTable from "@/components/download/FileTable";
@@ -43,6 +44,14 @@ export default function DownloadPageClient({
     <main className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-12">
       <div className="w-full max-w-lg">
         <div className="mb-8 text-center">
+          <Image
+            src="/icon.svg"
+            alt=""
+            aria-hidden="true"
+            width={72}
+            height={72}
+            className="mx-auto mb-4 h-18 w-18 rounded-2xl shadow-lg shadow-primary/15"
+          />
           <h1 className="text-4xl font-bold tracking-tight">QuickDrop</h1>
           <p className="mt-2 text-muted-foreground">
             {kind === "text" ? "공유된 텍스트" : "파일 받기"}
