@@ -17,6 +17,7 @@ interface ShareResultProps {
 
 export default function ShareResult({ result, onReset }: ShareResultProps) {
   const [copied, setCopied] = useState(false);
+  const [urlCopied, setUrlCopied] = useState(false);
   const shareUrl = `${BASE_URL}/d/${result.code}`;
 
   const summary =
@@ -28,6 +29,12 @@ export default function ShareResult({ result, onReset }: ShareResultProps) {
     await navigator.clipboard.writeText(result.code);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleCopyUrl = async () => {
+    await navigator.clipboard.writeText(shareUrl);
+    setUrlCopied(true);
+    window.setTimeout(() => setUrlCopied(false), 2000);
   };
 
   return (
@@ -60,11 +67,29 @@ export default function ShareResult({ result, onReset }: ShareResultProps) {
 
       {/* QR 코드 및 공유 링크 */}
       <div className="flex flex-col items-center gap-2">
-        <p className="text-xs text-muted-foreground">QR 코드 또는 링크로 열기</p>
+        <p className="text-xs text-muted-foreground">
+          QR 코드 또는 링크로 열기
+        </p>
         <div className="rounded-xl border bg-white p-3 shadow-sm">
           <QRCodeSVG value={shareUrl} size={180} />
         </div>
-        <p className="break-all text-xs text-muted-foreground">{shareUrl}</p>
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={handleCopyUrl}
+          className="h-auto max-w-full whitespace-normal break-all px-3 py-2 text-center font-mono text-base font-semibold leading-relaxed"
+          aria-label="공유 링크 복사"
+        >
+          {shareUrl}
+        </Button>
+        <p
+          aria-live="polite"
+          className={`min-h-3 text-xs font-medium text-green-600 transition-opacity duration-200 ${
+            urlCopied ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          링크가 복사됨
+        </p>
       </div>
 
       <Button variant="outline" onClick={onReset} className="gap-2">
