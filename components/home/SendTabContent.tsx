@@ -18,6 +18,7 @@ import {
   clampUploadExpiryMinutes,
   DEFAULT_UPLOAD_EXPIRY_MINUTES,
 } from "@/lib/upload-expiry";
+import { saveUploadHistory } from "@/lib/upload-history";
 import { useUpload } from "@/queries/upload/mutations";
 import type { SessionKind, UploadResult } from "@/types/quickdrop";
 
@@ -64,15 +65,18 @@ export default function SendTabContent() {
 
   const handleUpload = useCallback(async () => {
     try {
+      let nextResult: UploadResult;
+
       if (mode === "file") {
         if (files.length === 0) return;
-        setResult(await uploadFiles(files, expiryMinutes));
-        return;
+        nextResult = await uploadFiles(files, expiryMinutes);
+      } else {
+        if (textContent.trim().length === 0) return;
+        nextResult = await uploadText(textContent, textTitle, expiryMinutes);
       }
 
-      if (textContent.trim().length === 0) return;
-
-      setResult(await uploadText(textContent, textTitle, expiryMinutes));
+      saveUploadHistory(nextResult);
+      setResult(nextResult);
     } catch (error) {
       toast.error(
         error instanceof Error

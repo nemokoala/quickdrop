@@ -3,6 +3,7 @@
 import HomeHero from "@/components/home/HomeHero";
 import ReceiveTabContent from "@/components/home/ReceiveTabContent";
 import SendTabContent from "@/components/home/SendTabContent";
+import UploadHistory from "@/components/home/UploadHistory";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function HomePage() {
@@ -40,6 +41,8 @@ export default function HomePage() {
             <ReceiveTabContent />
           </TabsContent>
         </Tabs>
+
+        <UploadHistory />
       </div>
     </main>
   );
