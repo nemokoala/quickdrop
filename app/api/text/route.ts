@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { generateUniqueCode } from "@/lib/code-generator";
 import { MAX_TEXT_BYTES } from "@/lib/config";
 import { clampUploadExpiryMinutes } from "@/lib/upload-expiry";
+import { getRequestLogContext, sendDiscordLog } from "@/lib/discord-webhook";
 
 interface TextUploadPayload {
   content?: unknown;
@@ -53,6 +54,16 @@ export async function POST(req: NextRequest) {
       textSize: size,
       expiresAt,
     },
+  });
+
+  await sendDiscordLog({
+    type: "upload",
+    code: session.code,
+    kind: "text",
+    title,
+    size,
+    expiresAt: session.expiresAt,
+    request: getRequestLogContext(req),
   });
 
   return NextResponse.json({

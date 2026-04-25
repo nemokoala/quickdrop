@@ -8,6 +8,7 @@ import { generateUniqueCode } from "@/lib/code-generator";
 import { createSessionDir, getFilePath } from "@/lib/storage";
 import { MAX_FILE_SIZE } from "@/lib/config";
 import { parseUploadExpiryMinutes } from "@/lib/upload-expiry";
+import { getRequestLogContext, sendDiscordLog } from "@/lib/discord-webhook";
 import { Readable } from "stream";
 
 interface ParsedFile {
@@ -159,6 +160,21 @@ export async function POST(req: NextRequest) {
       include: { files: true },
     });
     console.log(`[upload][${requestId}] 완료 (총 ${Date.now() - startTime}ms)`);
+
+    await sendDiscordLog({
+      type: "upload",
+      code: session.code,
+      kind: "file",
+      fileCount: session.files.length,
+      totalSize: session.files.reduce((sum, file) => sum + Number(file.size), 0),
+      expiresAt: session.expiresAt,
+      files: session.files.map((file) => ({
+        originalName: file.originalName,
+        size: Number(file.size),
+        mimeType: file.mimeType,
+      })),
+      request: getRequestLogContext(req),
+    });
 
     return NextResponse.json({
       code: session.code,

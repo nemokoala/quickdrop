@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { createReadStream, statSync } from "fs";
 import { prisma } from "@/lib/prisma";
 import { getFilePath } from "@/lib/storage";
+import { getRequestLogContext, sendDiscordLog } from "@/lib/discord-webhook";
 import { Readable } from "stream";
 
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ fileId: string }> }
 ) {
   const { fileId } = await params;
@@ -32,6 +33,17 @@ export async function GET(
 
   try {
     const stat = statSync(filePath);
+
+    await sendDiscordLog({
+      type: "download",
+      code: file.session.code,
+      mode: "single",
+      fileName: file.originalName,
+      size: stat.size,
+      mimeType: file.mimeType,
+      request: getRequestLogContext(req),
+    });
+
     const stream = createReadStream(filePath);
     const webStream = Readable.toWeb(stream) as ReadableStream;
 

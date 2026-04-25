@@ -4,9 +4,10 @@ import { createReadStream } from "fs";
 import { Readable, PassThrough } from "stream";
 import { prisma } from "@/lib/prisma";
 import { getFilePath } from "@/lib/storage";
+import { getRequestLogContext, sendDiscordLog } from "@/lib/discord-webhook";
 
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ code: string }> }
 ) {
   const { code } = await params;
@@ -30,6 +31,15 @@ export async function GET(
       { status: 400 },
     );
   }
+
+  await sendDiscordLog({
+    type: "download",
+    code: session.code,
+    mode: "zip",
+    fileCount: session.files.length,
+    totalSize: session.files.reduce((sum, file) => sum + Number(file.size), 0),
+    request: getRequestLogContext(req),
+  });
 
   const passThrough = new PassThrough();
   const archive = archiver("zip", { zlib: { level: 5 } });
