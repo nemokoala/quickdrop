@@ -1,5 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
+import { Suspense } from "react";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import QueryProviders from "@/providers/QueryProviders";
 import "./globals.css";
 
@@ -26,6 +28,9 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <QueryProviders>{children}</QueryProviders>
+        <Suspense fallback={null}>
+          <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_ID} />
+        </Suspense>
       </body>
     </html>
   );
