@@ -46,9 +46,7 @@ export default function UploadHistory() {
   }, [refreshHistory]);
 
   const handleCopy = async (code: string) => {
-    await navigator.clipboard.writeText(
-      `${window.location.origin}/${locale}/d/${code}`,
-    );
+    await navigator.clipboard.writeText(`${window.location.origin}/d/${code}`);
     setCopiedCode(code);
     window.setTimeout(() => setCopiedCode(null), 2000);
   };
