@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { Toaster } from "@/components/ui/sonner";
+import { HomeSendDraftProvider } from "@/providers/HomeSendDraftProvider";
 
 export default function QueryProviders({
   children,
@@ -18,7 +19,7 @@ export default function QueryProviders({
 
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <HomeSendDraftProvider>{children}</HomeSendDraftProvider>
       <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );

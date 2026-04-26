@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import FileList from "@/components/upload/FileList";
@@ -17,23 +17,30 @@ import {
 } from "@/components/ui/card";
 import {
   clampUploadExpiryMinutes,
-  DEFAULT_UPLOAD_EXPIRY_MINUTES,
 } from "@/lib/upload-expiry";
 import { MAX_FILE_SIZE, MAX_FILE_SIZE_LABEL } from "@/lib/config";
 import { saveUploadHistory } from "@/lib/upload-history";
+import { useHomeSendDraft } from "@/providers/HomeSendDraftProvider";
 import { useUpload } from "@/queries/upload/mutations";
-import type { SessionKind, UploadResult } from "@/types/quickdrop";
+import type { UploadResult } from "@/types/quickdrop";
 
 export default function SendTabContent() {
   const t = useTranslations("Send");
-  const [mode, setMode] = useState<SessionKind>("file");
-  const [files, setFiles] = useState<File[]>([]);
-  const [textTitle, setTextTitle] = useState("");
-  const [textContent, setTextContent] = useState("");
-  const [result, setResult] = useState<UploadResult | null>(null);
-  const [expiryMinutes, setExpiryMinutes] = useState(
-    DEFAULT_UPLOAD_EXPIRY_MINUTES,
-  );
+  const {
+    mode,
+    setMode,
+    files,
+    setFiles,
+    textTitle,
+    setTextTitle,
+    textContent,
+    setTextContent,
+    result,
+    setResult,
+    expiryMinutes,
+    setExpiryMinutes,
+    resetDraft,
+  } = useHomeSendDraft();
   const {
     uploadFiles,
     uploadText,
@@ -58,20 +65,16 @@ export default function SendTabContent() {
 
       return nextFiles;
     });
-  }, [t]);
+  }, [setFiles, t]);
 
   const handleRemove = useCallback((index: number) => {
     setFiles((prev) => prev.filter((_, fileIndex) => fileIndex !== index));
-  }, []);
+  }, [setFiles]);
 
   const handleReset = useCallback(() => {
-    setFiles([]);
-    setTextTitle("");
-    setTextContent("");
-    setResult(null);
-    setExpiryMinutes(DEFAULT_UPLOAD_EXPIRY_MINUTES);
+    resetDraft();
     resetUpload();
-  }, [resetUpload]);
+  }, [resetDraft, resetUpload]);
 
   const handleUpload = useCallback(async () => {
     try {
@@ -110,6 +113,7 @@ export default function SendTabContent() {
     textTitle,
     uploadFiles,
     uploadText,
+    setResult,
   ]);
 
   return (
