@@ -23,6 +23,13 @@ function formatSavedAt(savedAt: string, locale: string) {
   }).format(new Date(savedAt));
 }
 
+function getStoredFileCount(item: UploadHistoryItem) {
+  if (typeof item.fileCount === "number") return item.fileCount;
+
+  const match = item.detail.match(/\d+/);
+  return match ? Number(match[0]) : 1;
+}
+
 export default function UploadHistory() {
   const [items, setItems] = useState<UploadHistoryItem[]>([]);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
@@ -75,6 +82,12 @@ export default function UploadHistory() {
         <ul className="divide-y divide-border/70">
           {items.map((item) => {
             const Icon = item.kind === "text" ? FileText : Upload;
+            const title =
+              item.kind === "text" && !item.title ? t("sharedText") : item.title;
+            const detail =
+              item.kind === "text"
+                ? t("textDetail")
+                : t("fileDetail", { count: getStoredFileCount(item) });
 
             return (
               <li key={item.code} className="p-3">
@@ -88,13 +101,13 @@ export default function UploadHistory() {
                       href={`/${locale}/d/${item.code}`}
                       className="block truncate text-sm font-semibold hover:text-primary"
                     >
-                      {item.title}
+                      {title}
                     </Link>
                     <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
                       <span className="font-mono font-medium text-foreground">
                         {item.code}
                       </span>
-                      <span>{item.detail}</span>
+                      <span>{detail}</span>
                       <span>{formatBytes(item.totalSize)}</span>
                       <span>{formatSavedAt(item.savedAt, locale)}</span>
                     </div>

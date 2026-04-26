@@ -15,6 +15,7 @@ export interface UploadHistoryItem {
   title: string;
   detail: string;
   totalSize: number;
+  fileCount?: number;
 }
 
 function isUploadHistoryItem(value: unknown): value is UploadHistoryItem {
@@ -29,7 +30,8 @@ function isUploadHistoryItem(value: unknown): value is UploadHistoryItem {
     typeof item.savedAt === "string" &&
     typeof item.title === "string" &&
     typeof item.detail === "string" &&
-    typeof item.totalSize === "number"
+    typeof item.totalSize === "number" &&
+    (typeof item.fileCount === "undefined" || typeof item.fileCount === "number")
   );
 }
 
@@ -52,8 +54,8 @@ function toHistoryItem(result: UploadResult): UploadHistoryItem {
       kind: result.kind,
       expiresAt: result.expiresAt,
       savedAt: new Date().toISOString(),
-      title: result.text.title || "공유 텍스트",
-      detail: "텍스트",
+      title: result.text.title || "",
+      detail: "text",
       totalSize: result.text.size,
     };
   }
@@ -67,8 +69,9 @@ function toHistoryItem(result: UploadResult): UploadHistoryItem {
     expiresAt: result.expiresAt,
     savedAt: new Date().toISOString(),
     title: firstFileName,
-    detail: fileCount > 1 ? `파일 ${fileCount}개` : "파일 1개",
+    detail: "file",
     totalSize: result.files.reduce((sum, file) => sum + file.size, 0),
+    fileCount,
   };
 }
 

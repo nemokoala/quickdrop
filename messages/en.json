@@ -74,6 +74,9 @@
     "title": "Previous uploads",
     "description": "Only uploads from this browser are shown.",
     "recent": "Recent {count}",
+    "sharedText": "Shared text",
+    "textDetail": "Text",
+    "fileDetail": "{count, plural, one {# file} other {# files}}",
     "copyLink": "Copy share link",
     "remove": "Remove from history"
   },

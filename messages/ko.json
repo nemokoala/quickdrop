@@ -74,6 +74,9 @@
     "title": "이전 업로드",
     "description": "이 브라우저에서 업로드한 항목만 표시합니다.",
     "recent": "최근 {count}개",
+    "sharedText": "공유 텍스트",
+    "textDetail": "텍스트",
+    "fileDetail": "파일 {count}개",
     "copyLink": "공유 링크 복사",
     "remove": "히스토리에서 제거"
   },
