@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -12,6 +13,8 @@ export default function DownloadActions({
   code,
   fileCount,
 }: DownloadActionsProps) {
+  const t = useTranslations("Download");
+
   const handleDownloadAll = () => {
     const anchor = document.createElement("a");
     anchor.href = `/api/download-all/${code}`;
@@ -24,7 +27,7 @@ export default function DownloadActions({
   return (
     <Button onClick={handleDownloadAll} className="w-full gap-2" size="lg">
       <Download className="h-4 w-4" />
-      전체 ZIP 다운로드 ({fileCount}개)
+      {t("downloadZip", { count: fileCount })}
     </Button>
   );
 }

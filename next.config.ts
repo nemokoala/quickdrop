@@ -1,14 +1,15 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
-  // 대용량 파일 업로드를 위해 Server Actions body size 제한 설정
-  // lib/config.ts의 MAX_FILE_SIZE와 동일하게 유지
   experimental: {
     serverActions: {
-      bodySizeLimit: "5gb",
+      bodySizeLimit: "6gb",
     },
     proxyClientMaxBodySize: "6gb",
   },
 };
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(nextConfig);

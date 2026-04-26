@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MAX_TEXT_BYTES, MAX_TEXT_BYTES_LABEL } from "@/lib/config";
@@ -34,17 +35,20 @@ export default function TextUploadForm({
   onUpload,
   onReset,
 }: TextUploadFormProps) {
+  const locale = useLocale();
+  const t = useTranslations("TextUpload");
   const textSize = new TextEncoder().encode(content).length;
   const isTooLarge = textSize > MAX_TEXT_BYTES;
   const canUpload = content.trim().length > 0 && !isUploading && !isTooLarge;
+  const duration = formatUploadExpiryMinutes(expiryMinutes, locale);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium">텍스트 공유</p>
+          <p className="text-sm font-medium">{t("title")}</p>
           <p className="text-xs text-muted-foreground">
-            일반 텍스트로 저장되며 최대 {MAX_TEXT_BYTES_LABEL}까지 업로드할 수 있습니다.
+            {t("description", { maxSize: MAX_TEXT_BYTES_LABEL })}
           </p>
         </div>
         <Button
@@ -55,19 +59,19 @@ export default function TextUploadForm({
           disabled={isUploading}
         >
           <RotateCcw className="mr-2 h-3.5 w-3.5" />
-          초기화
+          {t("reset")}
         </Button>
       </div>
 
       <div className="flex flex-col gap-2">
         <label htmlFor="text-title" className="text-sm font-medium">
-          제목
+          {t("titleLabel")}
         </label>
         <input
           id="text-title"
           value={title}
           onChange={(event) => onTitleChange(event.target.value)}
-          placeholder="메모 제목 또는 파일명"
+          placeholder={t("titlePlaceholder")}
           maxLength={80}
           disabled={isUploading}
           className="h-11 rounded-md border bg-background px-3 text-sm outline-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
@@ -77,18 +81,18 @@ export default function TextUploadForm({
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <label htmlFor="text-content" className="text-sm font-medium">
-            내용
+            {t("contentLabel")}
           </label>
           <span className="text-xs text-muted-foreground">
             {formatBytes(textSize)}
-            {isTooLarge ? ` / 제한 ${MAX_TEXT_BYTES_LABEL}` : ""}
+            {isTooLarge ? t("contentLimit", { maxSize: MAX_TEXT_BYTES_LABEL }) : ""}
           </span>
         </div>
         <textarea
           id="text-content"
           value={content}
           onChange={(event) => onContentChange(event.target.value)}
-          placeholder="공유할 텍스트를 붙여넣거나 직접 입력하세요."
+          placeholder={t("contentPlaceholder")}
           disabled={isUploading}
           className="min-h-60 rounded-md border bg-background px-3 py-3 text-sm outline-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
         />
@@ -97,13 +101,13 @@ export default function TextUploadForm({
       <div className="rounded-lg border bg-background/70 px-4 py-3">
         <div className="mb-2 flex items-center justify-between gap-3">
           <div>
-            <p className="text-sm font-medium">만료 시간</p>
+            <p className="text-sm font-medium">{t("expiryTitle")}</p>
             <p className="text-xs text-muted-foreground">
-              업로드 후 {formatUploadExpiryMinutes(expiryMinutes)} 뒤 자동 삭제
+              {t("expiryDescription", { duration })}
             </p>
           </div>
           <span className="rounded-md bg-muted px-2 py-1 text-sm font-semibold">
-            {formatUploadExpiryMinutes(expiryMinutes)}
+            {duration}
           </span>
         </div>
 
@@ -116,17 +120,17 @@ export default function TextUploadForm({
           onChange={(event) => onExpiryChange(Number(event.target.value))}
           disabled={isUploading}
           className="h-2 w-full cursor-pointer accent-primary disabled:cursor-not-allowed"
-          aria-label="텍스트 만료 시간"
+          aria-label={t("expiryAria")}
         />
 
         <div className="mt-2 flex justify-between text-xs text-muted-foreground">
-          <span>30분</span>
-          <span>3시간</span>
+          <span>{locale === "en" ? "30 min" : "30분"}</span>
+          <span>{locale === "en" ? "3 hours" : "3시간"}</span>
         </div>
       </div>
 
       <Button onClick={onUpload} disabled={!canUpload} className="w-full" size="lg">
-        {isUploading ? "업로드 중..." : "텍스트 공유"}
+        {isUploading ? t("uploading") : t("submit")}
       </Button>
     </div>
   );

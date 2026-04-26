@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import QRCodeSVG from "react-qr-code";
 import { Check, Copy, RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -18,12 +19,14 @@ interface ShareResultProps {
 export default function ShareResult({ result, onReset }: ShareResultProps) {
   const [copied, setCopied] = useState(false);
   const [urlCopied, setUrlCopied] = useState(false);
-  const shareUrl = `${BASE_URL}/d/${result.code}`;
+  const locale = useLocale();
+  const t = useTranslations("ShareResult");
+  const shareUrl = `${BASE_URL}/${locale}/d/${result.code}`;
 
   const summary =
     result.kind === "text" && result.text
       ? `${result.text.title} / ${formatBytes(result.text.size)}`
-      : `파일 ${result.files.length}개`;
+      : t("fileSummary", { count: result.files.length });
 
   const handleCopyCode = async () => {
     await navigator.clipboard.writeText(result.code);
@@ -41,15 +44,12 @@ export default function ShareResult({ result, onReset }: ShareResultProps) {
     <div className="flex flex-col items-center gap-6">
       <div className="text-center">
         <Badge variant="outline" className="mb-2 text-xs">
-          {formatExpiry(result.expiresAt)}
+          {formatExpiry(result.expiresAt, locale)}
         </Badge>
-        <p className="text-sm text-muted-foreground">
-          아래 코드나 링크를 상대방에게 전달하세요.
-        </p>
+        <p className="text-sm text-muted-foreground">{t("instruction")}</p>
         <p className="mt-1 text-xs text-muted-foreground">{summary}</p>
       </div>
 
-      {/* 6자리 공유 코드 */}
       <div className="flex items-center gap-3">
         <span className="font-mono text-5xl font-bold tracking-widest">
           {result.code}
@@ -65,11 +65,8 @@ export default function ShareResult({ result, onReset }: ShareResultProps) {
 
       <Separator className="w-full" />
 
-      {/* QR 코드 및 공유 링크 */}
       <div className="flex flex-col items-center gap-2">
-        <p className="text-xs text-muted-foreground">
-          QR 코드 또는 링크로 열기
-        </p>
+        <p className="text-xs text-muted-foreground">{t("qrInstruction")}</p>
         <div className="rounded-xl border bg-white p-3 shadow-sm">
           <QRCodeSVG value={shareUrl} size={180} />
         </div>
@@ -78,7 +75,7 @@ export default function ShareResult({ result, onReset }: ShareResultProps) {
           variant="ghost"
           onClick={handleCopyUrl}
           className="h-auto max-w-full whitespace-normal break-all px-3 py-2 text-center font-mono text-base font-semibold leading-relaxed"
-          aria-label="공유 링크 복사"
+          aria-label={t("copyLink")}
         >
           {shareUrl}
         </Button>
@@ -88,13 +85,13 @@ export default function ShareResult({ result, onReset }: ShareResultProps) {
             urlCopied ? "opacity-100" : "opacity-0"
           }`}
         >
-          링크가 복사됨
+          {t("linkCopied")}
         </p>
       </div>
 
       <Button variant="outline" onClick={onReset} className="gap-2">
         <RefreshCw className="h-4 w-4" />
-        새로 업로드
+        {t("newUpload")}
       </Button>
     </div>
   );

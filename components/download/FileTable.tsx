@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Download, FileIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatBytes } from "@/lib/format";
@@ -10,6 +11,8 @@ interface FileTableProps {
 }
 
 export default function FileTable({ files }: FileTableProps) {
+  const t = useTranslations("Download");
+
   const handleDownload = (file: FileInfo) => {
     const anchor = document.createElement("a");
     anchor.href = `/api/download/${file.id}`;
@@ -27,14 +30,16 @@ export default function FileTable({ files }: FileTableProps) {
           <FileIcon className="h-5 w-5 shrink-0 text-muted-foreground" />
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium">{file.originalName}</p>
-            <p className="text-xs text-muted-foreground">{formatBytes(file.size)}</p>
+            <p className="text-xs text-muted-foreground">
+              {formatBytes(file.size)}
+            </p>
           </div>
           <Button
             variant="ghost"
             size="icon"
             className="h-8 w-8 shrink-0"
             onClick={() => handleDownload(file)}
-            aria-label={`${file.originalName} 다운로드`}
+            aria-label={t("downloadFile", { name: file.originalName })}
           >
             <Download className="h-4 w-4" />
           </Button>

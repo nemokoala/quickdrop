@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Upload } from "lucide-react";
 import { MAX_FILE_SIZE_LABEL } from "@/lib/config";
 import { cn } from "@/lib/utils";
@@ -16,6 +17,7 @@ export default function UploadZone({
 }: UploadZoneProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const t = useTranslations("UploadZone");
 
   const handleFiles = useCallback(
     (files: FileList | null) => {
@@ -57,12 +59,9 @@ export default function UploadZone({
         <Upload className="h-8 w-8 text-primary" />
       </div>
       <div className="text-center">
-        <p className="text-base font-medium">
-          파일을 끌어놓거나 클릭해서 선택하세요
-        </p>
+        <p className="text-base font-medium">{t("title")}</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          여러 파일을 올릴 수 있고, 파일당 최대 {MAX_FILE_SIZE_LABEL}까지
-          지원합니다.
+          {t("description", { maxSize: MAX_FILE_SIZE_LABEL })}
         </p>
       </div>
       <input

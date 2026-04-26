@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import FileList from "@/components/upload/FileList";
 import ShareResult from "@/components/upload/ShareResult";
@@ -23,6 +24,7 @@ import { useUpload } from "@/queries/upload/mutations";
 import type { SessionKind, UploadResult } from "@/types/quickdrop";
 
 export default function SendTabContent() {
+  const t = useTranslations("Send");
   const [mode, setMode] = useState<SessionKind>("file");
   const [files, setFiles] = useState<File[]>([]);
   const [textTitle, setTextTitle] = useState("");
@@ -78,16 +80,13 @@ export default function SendTabContent() {
       saveUploadHistory(nextResult);
       setResult(nextResult);
     } catch (error) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "업로드에 실패했습니다.",
-      );
+      toast.error(error instanceof Error ? error.message : t("uploadFailed"));
     }
   }, [
     expiryMinutes,
     files,
     mode,
+    t,
     textContent,
     textTitle,
     uploadFiles,
@@ -99,18 +98,12 @@ export default function SendTabContent() {
       <CardHeader className="pb-0">
         <CardTitle className="text-lg">
           {result
-            ? "공유 코드"
+            ? t("shareCode")
             : mode === "file"
-              ? "파일 업로드"
-              : "텍스트 공유"}
+              ? t("fileUpload")
+              : t("textShare")}
         </CardTitle>
-        {!result && (
-          <CardDescription>
-            {
-              "파일 공유와 텍스트 공유를 전환해서 사용할 수 있습니다."
-            }
-          </CardDescription>
-        )}
+        {!result && <CardDescription>{t("description")}</CardDescription>}
       </CardHeader>
       <CardContent>
         {result ? (
@@ -124,7 +117,7 @@ export default function SendTabContent() {
                 onClick={() => setMode("file")}
                 disabled={isUploading}
               >
-                {"파일"}
+                {t("file")}
               </Button>
               <Button
                 type="button"
@@ -132,7 +125,7 @@ export default function SendTabContent() {
                 onClick={() => setMode("text")}
                 disabled={isUploading}
               >
-                {"텍스트"}
+                {t("text")}
               </Button>
             </div>
 

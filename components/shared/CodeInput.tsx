@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,11 +23,13 @@ export default function CodeInput({
 }: CodeInputProps) {
   const [code, setCode] = useState("");
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("CodeInput");
 
   const handleGo = (event?: FormEvent) => {
     event?.preventDefault();
     if (code.length === 6) {
-      router.push(`/d/${code}`);
+      router.push(`/${locale}/d/${code}`);
     }
   };
 
@@ -60,7 +63,7 @@ export default function CodeInput({
             "absolute -right-10 top-1/2 h-8 w-8 -translate-y-1/2 rounded-full transition-opacity hover:bg-muted-foreground/10 active:bg-muted-foreground/20 dark:hover:bg-muted-foreground/30 dark:active:bg-muted-foreground/40",
             code.length === 0 ? "pointer-events-none opacity-0" : "opacity-100",
           )}
-          aria-label="코드 지우기"
+          aria-label={t("clear")}
         >
           <X className="h-4 w-4" />
         </Button>
@@ -70,7 +73,7 @@ export default function CodeInput({
         disabled={code.length !== 6}
         className="mt-4 h-11 w-full font-semibold"
       >
-        열기
+        {t("open")}
       </Button>
     </form>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { FileIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,6 +42,8 @@ export default function FileList({
   onReset,
 }: FileListProps) {
   const [overlayUrl, setOverlayUrl] = useState<string | null>(null);
+  const locale = useLocale();
+  const t = useTranslations("FileList");
 
   const previews = useMemo(() => {
     const urls: Record<string, string> = {};
@@ -63,17 +66,18 @@ export default function FileList({
   if (files.length === 0) return null;
 
   const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+  const duration = formatUploadExpiryMinutes(expiryMinutes, locale);
 
   return (
     <>
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-muted-foreground">
-            파일 {files.length}개 / {formatBytes(totalSize)}
+            {t("summary", { count: files.length, size: formatBytes(totalSize) })}
           </span>
           {!isUploading && (
             <Button variant="outline" size="sm" onClick={onReset}>
-              모두 제거
+              {t("removeAll")}
             </Button>
           )}
         </div>
@@ -124,14 +128,13 @@ export default function FileList({
         <div className="rounded-lg border bg-background/70 px-4 py-3">
           <div className="mb-2 flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm font-medium">만료 시간</p>
+              <p className="text-sm font-medium">{t("expiryTitle")}</p>
               <p className="text-xs text-muted-foreground">
-                업로드 후 {formatUploadExpiryMinutes(expiryMinutes)} 뒤 자동
-                삭제
+                {t("expiryDescription", { duration })}
               </p>
             </div>
             <span className="rounded-md bg-muted px-2 py-1 text-sm font-semibold">
-              {formatUploadExpiryMinutes(expiryMinutes)}
+              {duration}
             </span>
           </div>
 
@@ -144,19 +147,19 @@ export default function FileList({
             onChange={(event) => onExpiryChange(Number(event.target.value))}
             disabled={isUploading}
             className="h-2 w-full cursor-pointer accent-primary disabled:cursor-not-allowed"
-            aria-label="업로드 만료 시간"
+            aria-label={t("expiryAria")}
           />
 
           <div className="mt-2 flex justify-between text-xs text-muted-foreground">
-            <span>30분</span>
-            <span>3시간</span>
+            <span>{t("minDuration")}</span>
+            <span>{t("maxDuration")}</span>
           </div>
         </div>
 
         {isUploading && progress !== null && (
           <div className="flex flex-col gap-1">
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>업로드 중...</span>
+              <span>{t("uploading")}</span>
               <span>{progress.percent}%</span>
             </div>
             <Progress value={progress.percent} className="h-2" />
@@ -165,7 +168,7 @@ export default function FileList({
 
         {!isUploading && (
           <Button onClick={onUpload} className="w-full" size="lg">
-            업로드
+            {t("upload")}
           </Button>
         )}
       </div>
@@ -178,13 +181,13 @@ export default function FileList({
           showCloseButton={false}
           className="place-items-center border-none bg-transparent p-0 shadow-none sm:max-w-[90vw]"
         >
-          <DialogTitle className="sr-only">이미지 미리보기</DialogTitle>
+          <DialogTitle className="sr-only">{t("previewTitle")}</DialogTitle>
           {overlayUrl && (
             <div className="relative w-fit">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={overlayUrl}
-                alt="미리보기"
+                alt={t("previewAlt")}
                 className="block max-h-[85vh] max-w-[90vw] rounded-lg object-contain"
               />
               <DialogClose className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white shadow-md backdrop-blur-sm transition-colors hover:bg-black/80">

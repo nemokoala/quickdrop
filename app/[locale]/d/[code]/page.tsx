@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import DownloadPageClient from "./DownloadPageClient";
 
 interface PageProps {
-  params: Promise<{ code: string }>;
+  params: Promise<{ code: string; locale: string }>;
 }
 
 export default async function DownloadPage({ params }: PageProps) {

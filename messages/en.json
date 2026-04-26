@@ -1,0 +1,105 @@
+{
+  "Meta": {
+    "title": "QuickDrop",
+    "description": "Share files or text quickly without signing in."
+  },
+  "Home": {
+    "heroDescription": "Share files or text quickly without signing in.",
+    "sendTab": "Send",
+    "receiveTab": "Receive"
+  },
+  "Language": {
+    "label": "Select language",
+    "ko": "한국어",
+    "en": "English"
+  },
+  "Send": {
+    "shareCode": "Share code",
+    "fileUpload": "File upload",
+    "textShare": "Share text",
+    "description": "Switch between file sharing and text sharing as needed.",
+    "file": "File",
+    "text": "Text",
+    "uploadFailed": "Upload failed."
+  },
+  "Receive": {
+    "title": "Open share",
+    "description": "Enter a 6-digit share code to download files or copy text."
+  },
+  "CodeInput": {
+    "clear": "Clear code",
+    "open": "Open"
+  },
+  "UploadZone": {
+    "title": "Drop files here or click to choose.",
+    "description": "You can add multiple files. Each file can be up to {maxSize}."
+  },
+  "FileList": {
+    "summary": "{count} files / {size}",
+    "removeAll": "Remove all",
+    "expiryTitle": "Expiration",
+    "expiryDescription": "Automatically deleted {duration} after upload",
+    "expiryAria": "Upload expiration time",
+    "minDuration": "30 min",
+    "maxDuration": "3 hours",
+    "uploading": "Uploading...",
+    "upload": "Upload",
+    "previewTitle": "Image preview",
+    "previewAlt": "Preview"
+  },
+  "TextUpload": {
+    "title": "Share text",
+    "description": "Saved as plain text. You can upload up to {maxSize}.",
+    "reset": "Reset",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Memo title or file name",
+    "contentLabel": "Content",
+    "contentLimit": " / limit {maxSize}",
+    "contentPlaceholder": "Paste or type the text you want to share.",
+    "expiryTitle": "Expiration",
+    "expiryDescription": "Automatically deleted {duration} after upload",
+    "expiryAria": "Text expiration time",
+    "uploading": "Uploading...",
+    "submit": "Share text"
+  },
+  "ShareResult": {
+    "instruction": "Send the code or link below to the recipient.",
+    "fileSummary": "{count} files",
+    "copyLink": "Copy share link",
+    "linkCopied": "Link copied",
+    "qrInstruction": "Open with QR code or link",
+    "newUpload": "New upload"
+  },
+  "History": {
+    "title": "Previous uploads",
+    "description": "Only uploads from this browser are shown.",
+    "recent": "Recent {count}",
+    "copyLink": "Copy share link",
+    "remove": "Remove from history"
+  },
+  "Download": {
+    "sharedText": "Shared text",
+    "receiveFile": "Receive files",
+    "expiredTitle": "This share code has expired.",
+    "expiredDescription": "Shared content is automatically deleted after it expires.",
+    "copied": "Copied",
+    "copyText": "Copy text",
+    "fileSummary": "{count} files / {size}",
+    "backHome": "Upload files",
+    "downloadFile": "Download {name}",
+    "downloadZip": "Download ZIP ({count})"
+  },
+  "NotFound": {
+    "codeTitle": "Code not found",
+    "codeDescription": "The share code you entered is invalid, or the files may have already expired and been deleted.",
+    "home": "Back home",
+    "securityNote": "For security, QuickDrop permanently deletes shared files from the system after they expire.",
+    "pageTitle": "Lost your way?",
+    "pageDescription": "The requested page could not be found. Check the address and try again."
+  },
+  "Expiry": {
+    "expired": "Expired",
+    "hoursMinutes": "Expires in {hours}h {minutes}m",
+    "minutes": "Expires in {minutes}m"
+  }
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import HomeHero from "@/components/home/HomeHero";
 import ReceiveTabContent from "@/components/home/ReceiveTabContent";
 import SendTabContent from "@/components/home/SendTabContent";
@@ -7,6 +8,8 @@ import UploadHistory from "@/components/home/UploadHistory";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function HomePage() {
+  const t = useTranslations("Home");
+
   return (
     <main className="relative flex min-h-dvh flex-col items-center justify-start overflow-x-hidden bg-background px-4 pb-12 pt-[10vh] md:pt-[13vh]">
       <div
@@ -23,13 +26,13 @@ export default function HomePage() {
               value="send"
               className="h-full rounded-lg text-sm font-semibold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
             >
-              공유하기
+              {t("sendTab")}
             </TabsTrigger>
             <TabsTrigger
               value="receive"
               className="h-full rounded-lg text-sm font-semibold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
             >
-              가져오기
+              {t("receiveTab")}
             </TabsTrigger>
           </TabsList>
 

@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, Check, Clock, Copy } from "lucide-react";
 import DownloadActions from "@/components/download/DownloadActions";
 import FileTable from "@/components/download/FileTable";
@@ -30,6 +31,8 @@ export default function DownloadPageClient({
   text,
 }: Props) {
   const [copied, setCopied] = useState(false);
+  const locale = useLocale();
+  const t = useTranslations("Download");
   const totalSize = files.reduce((sum, file) => sum + file.size, 0);
 
   const handleCopy = async () => {
@@ -54,7 +57,7 @@ export default function DownloadPageClient({
           />
           <h1 className="text-4xl font-bold tracking-tight">QuickDrop</h1>
           <p className="mt-2 text-muted-foreground">
-            {kind === "text" ? "공유된 텍스트" : "파일 받기"}
+            {kind === "text" ? t("sharedText") : t("receiveFile")}
           </p>
         </div>
 
@@ -69,17 +72,15 @@ export default function DownloadPageClient({
                 className="gap-1 text-xs"
               >
                 <Clock className="h-3 w-3" />
-                {formatExpiry(expiresAt)}
+                {formatExpiry(expiresAt, locale)}
               </Badge>
             </div>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             {expired ? (
               <div className="py-8 text-center text-muted-foreground">
-                <p className="font-medium">이 공유 코드는 만료되었습니다.</p>
-                <p className="mt-1 text-sm">
-                  공유된 내용은 만료 시 자동으로 삭제됩니다.
-                </p>
+                <p className="font-medium">{t("expiredTitle")}</p>
+                <p className="mt-1 text-sm">{t("expiredDescription")}</p>
               </div>
             ) : kind === "text" && text ? (
               <>
@@ -96,7 +97,7 @@ export default function DownloadPageClient({
                     ) : (
                       <Copy className="h-4 w-4" />
                     )}
-                    {copied ? "복사됨" : "텍스트 복사"}
+                    {copied ? t("copied") : t("copyText")}
                   </Button>
                 </div>
                 <textarea
@@ -108,7 +109,10 @@ export default function DownloadPageClient({
             ) : (
               <>
                 <p className="text-sm text-muted-foreground">
-                  파일 {files.length}개 / {formatBytes(totalSize)}
+                  {t("fileSummary", {
+                    count: files.length,
+                    size: formatBytes(totalSize),
+                  })}
                 </p>
                 <FileTable files={files} />
                 {files.length > 1 && (
@@ -121,9 +125,9 @@ export default function DownloadPageClient({
 
         <div className="mt-4 flex justify-center">
           <Button variant="ghost" asChild className="gap-2 text-muted-foreground">
-            <Link href="/">
+            <Link href={`/${locale}`}>
               <ArrowLeft className="h-4 w-4" />
-              파일 올리기
+              {t("backHome")}
             </Link>
           </Button>
         </div>

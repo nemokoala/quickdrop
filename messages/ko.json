@@ -1,0 +1,105 @@
+{
+  "Meta": {
+    "title": "QuickDrop",
+    "description": "로그인 없이 파일이나 텍스트를 빠르게 공유하세요."
+  },
+  "Home": {
+    "heroDescription": "로그인 없이 파일이나 텍스트를 빠르게 공유하세요.",
+    "sendTab": "공유하기",
+    "receiveTab": "가져오기"
+  },
+  "Language": {
+    "label": "언어 선택",
+    "ko": "한국어",
+    "en": "English"
+  },
+  "Send": {
+    "shareCode": "공유 코드",
+    "fileUpload": "파일 업로드",
+    "textShare": "텍스트 공유",
+    "description": "파일 공유와 텍스트 공유를 전환해서 사용할 수 있습니다.",
+    "file": "파일",
+    "text": "텍스트",
+    "uploadFailed": "업로드에 실패했습니다."
+  },
+  "Receive": {
+    "title": "공유 열기",
+    "description": "6자리 공유 코드를 입력하면 파일을 받거나 텍스트를 복사할 수 있습니다."
+  },
+  "CodeInput": {
+    "clear": "코드 지우기",
+    "open": "열기"
+  },
+  "UploadZone": {
+    "title": "파일을 끌어놓거나 클릭해서 선택하세요.",
+    "description": "여러 파일을 올릴 수 있고, 파일당 최대 {maxSize}까지 지원합니다."
+  },
+  "FileList": {
+    "summary": "파일 {count}개 / {size}",
+    "removeAll": "모두 제거",
+    "expiryTitle": "만료 시간",
+    "expiryDescription": "업로드 후 {duration} 뒤 자동 삭제",
+    "expiryAria": "업로드 만료 시간",
+    "minDuration": "30분",
+    "maxDuration": "3시간",
+    "uploading": "업로드 중...",
+    "upload": "업로드",
+    "previewTitle": "이미지 미리보기",
+    "previewAlt": "미리보기"
+  },
+  "TextUpload": {
+    "title": "텍스트 공유",
+    "description": "일반 텍스트로 저장되며 최대 {maxSize}까지 업로드할 수 있습니다.",
+    "reset": "초기화",
+    "titleLabel": "제목",
+    "titlePlaceholder": "메모 제목 또는 파일명",
+    "contentLabel": "내용",
+    "contentLimit": " / 제한 {maxSize}",
+    "contentPlaceholder": "공유할 텍스트를 붙여넣거나 직접 입력하세요.",
+    "expiryTitle": "만료 시간",
+    "expiryDescription": "업로드 후 {duration} 뒤 자동 삭제",
+    "expiryAria": "텍스트 만료 시간",
+    "uploading": "업로드 중...",
+    "submit": "텍스트 공유"
+  },
+  "ShareResult": {
+    "instruction": "아래 코드나 링크를 상대방에게 전달하세요.",
+    "fileSummary": "파일 {count}개",
+    "copyLink": "공유 링크 복사",
+    "linkCopied": "링크가 복사됨",
+    "qrInstruction": "QR 코드 또는 링크로 열기",
+    "newUpload": "새로 업로드"
+  },
+  "History": {
+    "title": "이전 업로드",
+    "description": "이 브라우저에서 업로드한 항목만 표시합니다.",
+    "recent": "최근 {count}개",
+    "copyLink": "공유 링크 복사",
+    "remove": "히스토리에서 제거"
+  },
+  "Download": {
+    "sharedText": "공유된 텍스트",
+    "receiveFile": "파일 받기",
+    "expiredTitle": "이 공유 코드는 만료되었습니다.",
+    "expiredDescription": "공유된 내용은 만료 후 자동으로 삭제됩니다.",
+    "copied": "복사됨",
+    "copyText": "텍스트 복사",
+    "fileSummary": "파일 {count}개 / {size}",
+    "backHome": "파일 올리기",
+    "downloadFile": "{name} 다운로드",
+    "downloadZip": "전체 ZIP 다운로드 ({count}개)"
+  },
+  "NotFound": {
+    "codeTitle": "코드를 찾을 수 없습니다",
+    "codeDescription": "입력하신 공유 코드가 유효하지 않거나 파일이 이미 만료되어 삭제되었을 수 있습니다.",
+    "home": "홈으로 돌아가기",
+    "securityNote": "QuickDrop은 보안을 위해 공유된 파일을 만료 후 시스템에서 영구 삭제합니다.",
+    "pageTitle": "길을 잃으셨나요?",
+    "pageDescription": "요청하신 페이지를 찾을 수 없습니다. 주소가 정확한지 다시 확인해주세요."
+  },
+  "Expiry": {
+    "expired": "만료됨",
+    "hoursMinutes": "{hours}시간 {minutes}분 후 만료",
+    "minutes": "{minutes}분 후 만료"
+  }
+}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { Check, Clock3, Copy, FileText, Trash2, Upload } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,8 +14,8 @@ import {
 } from "@/lib/upload-history";
 import { formatBytes, formatExpiry } from "@/lib/format";
 
-function formatSavedAt(savedAt: string) {
-  return new Intl.DateTimeFormat("ko-KR", {
+function formatSavedAt(savedAt: string, locale: string) {
+  return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "ko-KR", {
     month: "short",
     day: "numeric",
     hour: "2-digit",
@@ -25,6 +26,8 @@ function formatSavedAt(savedAt: string) {
 export default function UploadHistory() {
   const [items, setItems] = useState<UploadHistoryItem[]>([]);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const locale = useLocale();
+  const t = useTranslations("History");
 
   const refreshHistory = useCallback(() => {
     setItems(getUploadHistory());
@@ -43,7 +46,9 @@ export default function UploadHistory() {
   }, [refreshHistory]);
 
   const handleCopy = async (code: string) => {
-    await navigator.clipboard.writeText(`${window.location.origin}/d/${code}`);
+    await navigator.clipboard.writeText(
+      `${window.location.origin}/${locale}/d/${code}`,
+    );
     setCopiedCode(code);
     window.setTimeout(() => setCopiedCode(null), 2000);
   };
@@ -58,13 +63,13 @@ export default function UploadHistory() {
     <section className="mt-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
       <div className="mb-3 flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-sm font-semibold">이전 업로드</h2>
+          <h2 className="text-sm font-semibold">{t("title")}</h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            이 브라우저에서 업로드한 항목만 표시됩니다.
+            {t("description")}
           </p>
         </div>
         <Badge variant="outline" className="shrink-0 text-xs">
-          최근 {items.length}개
+          {t("recent", { count: items.length })}
         </Badge>
       </div>
 
@@ -75,14 +80,14 @@ export default function UploadHistory() {
 
             return (
               <li key={item.code} className="p-3">
-                <div className="flex min-w-0 items-start gap-3 mt-1">
+                <div className="mt-1 flex min-w-0 items-start gap-3">
                   <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <Icon className="h-4 w-4" />
                   </div>
 
                   <div className="min-w-0 flex-1">
                     <Link
-                      href={`/d/${item.code}`}
+                      href={`/${locale}/d/${item.code}`}
                       className="block truncate text-sm font-semibold hover:text-primary"
                     >
                       {item.title}
@@ -93,11 +98,11 @@ export default function UploadHistory() {
                       </span>
                       <span>{item.detail}</span>
                       <span>{formatBytes(item.totalSize)}</span>
-                      <span>{formatSavedAt(item.savedAt)}</span>
+                      <span>{formatSavedAt(item.savedAt, locale)}</span>
                     </div>
                     <div className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground">
                       <Clock3 className="h-3 w-3" />
-                      {formatExpiry(item.expiresAt)}
+                      {formatExpiry(item.expiresAt, locale)}
                     </div>
                   </div>
 
@@ -107,7 +112,7 @@ export default function UploadHistory() {
                       variant="ghost"
                       size="icon-sm"
                       onClick={() => handleCopy(item.code)}
-                      aria-label="공유 링크 복사"
+                      aria-label={t("copyLink")}
                     >
                       {copiedCode === item.code ? (
                         <Check className="h-4 w-4 text-green-600" />
@@ -120,7 +125,7 @@ export default function UploadHistory() {
                       variant="ghost"
                       size="icon-sm"
                       onClick={() => handleRemove(item.code)}
-                      aria-label="히스토리에서 삭제"
+                      aria-label={t("remove")}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>

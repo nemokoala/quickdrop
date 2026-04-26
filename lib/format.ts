@@ -8,15 +8,22 @@ export function formatBytes(bytes: number): string {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
 }
 
-export function formatExpiry(expiresAt: string): string {
+export function formatExpiry(expiresAt: string, locale = "ko"): string {
   const diff = new Date(expiresAt).getTime() - Date.now();
 
-  if (diff <= 0) return "만료됨";
+  if (diff <= 0) {
+    return locale === "en" ? "Expired" : "만료됨";
+  }
 
   const hours = Math.floor(diff / 3600000);
   const minutes = Math.floor((diff % 3600000) / 60000);
 
-  if (hours > 0) return `${hours}시간 ${minutes}분 뒤 만료`;
+  if (locale === "en") {
+    if (hours > 0) return `Expires in ${hours}h ${minutes}m`;
+    return `Expires in ${minutes}m`;
+  }
 
-  return `${minutes}분 뒤 만료`;
+  if (hours > 0) return `${hours}시간 ${minutes}분 후 만료`;
+
+  return `${minutes}분 후 만료`;
 }
