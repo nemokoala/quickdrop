@@ -1,10 +1,25 @@
 import { Buffer } from "node:buffer";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import DownloadPageClient from "./DownloadPageClient";
 
 interface PageProps {
   params: Promise<{ code: string; locale: string }>;
+}
+
+export function generateMetadata(): Metadata {
+  return {
+    title: "QuickDrop",
+    robots: {
+      index: false,
+      follow: false,
+      googleBot: {
+        index: false,
+        follow: false,
+      },
+    },
+  };
 }
 
 export default async function DownloadPage({ params }: PageProps) {

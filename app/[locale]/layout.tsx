@@ -9,6 +9,10 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
+const baseUrl = new URL(
+  process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+);
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -20,13 +24,30 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "Meta" });
 
   return {
+    metadataBase: baseUrl,
     title: t("title"),
     description: t("description"),
     alternates: {
+      canonical: `/${locale}`,
       languages: {
         ko: "/ko",
         en: "/en",
+        "x-default": "/",
       },
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: `/${locale}`,
+      siteName: "QuickDrop",
+      locale: locale === "ko" ? "ko_KR" : "en_US",
+      alternateLocale: locale === "ko" ? ["en_US"] : ["ko_KR"],
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title: t("title"),
+      description: t("description"),
     },
     icons: {
       icon: "/icon.svg",
