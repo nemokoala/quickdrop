@@ -54,8 +54,21 @@ export function useUpload(): UseUploadReturn {
             return;
           }
 
+          if (xhr.status === 413) {
+            reject(new Error("UPLOAD_TOO_LARGE"));
+            return;
+          }
+
           try {
-            const error = JSON.parse(xhr.responseText) as { error?: string };
+            const error = JSON.parse(xhr.responseText) as {
+              code?: string;
+              error?: string;
+            };
+            if (error.code === "UPLOAD_TOO_LARGE") {
+              reject(new Error("UPLOAD_TOO_LARGE"));
+              return;
+            }
+
             reject(new Error(error.error || "Upload failed"));
           } catch {
             reject(new Error(`Upload failed with status ${xhr.status}`));

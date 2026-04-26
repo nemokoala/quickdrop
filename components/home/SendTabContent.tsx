@@ -19,6 +19,7 @@ import {
   clampUploadExpiryMinutes,
   DEFAULT_UPLOAD_EXPIRY_MINUTES,
 } from "@/lib/upload-expiry";
+import { MAX_FILE_SIZE, MAX_FILE_SIZE_LABEL } from "@/lib/config";
 import { saveUploadHistory } from "@/lib/upload-history";
 import { useUpload } from "@/queries/upload/mutations";
 import type { SessionKind, UploadResult } from "@/types/quickdrop";
@@ -47,10 +48,17 @@ export default function SendTabContent() {
       const deduped = newFiles.filter(
         (file) => !existing.has(`${file.name}-${file.size}`),
       );
+      const nextFiles = [...prev, ...deduped];
+      const totalSize = nextFiles.reduce((sum, file) => sum + file.size, 0);
 
-      return [...prev, ...deduped];
+      if (totalSize > MAX_FILE_SIZE) {
+        toast.error(t("uploadTooLarge", { maxSize: MAX_FILE_SIZE_LABEL }));
+        return prev;
+      }
+
+      return nextFiles;
     });
-  }, []);
+  }, [t]);
 
   const handleRemove = useCallback((index: number) => {
     setFiles((prev) => prev.filter((_, fileIndex) => fileIndex !== index));
@@ -71,6 +79,12 @@ export default function SendTabContent() {
 
       if (mode === "file") {
         if (files.length === 0) return;
+        const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+        if (totalSize > MAX_FILE_SIZE) {
+          toast.error(t("uploadTooLarge", { maxSize: MAX_FILE_SIZE_LABEL }));
+          return;
+        }
+
         nextResult = await uploadFiles(files, expiryMinutes);
       } else {
         if (textContent.trim().length === 0) return;
@@ -80,6 +94,11 @@ export default function SendTabContent() {
       saveUploadHistory(nextResult);
       setResult(nextResult);
     } catch (error) {
+      if (error instanceof Error && error.message === "UPLOAD_TOO_LARGE") {
+        toast.error(t("uploadTooLarge", { maxSize: MAX_FILE_SIZE_LABEL }));
+        return;
+      }
+
       toast.error(error instanceof Error ? error.message : t("uploadFailed"));
     }
   }, [

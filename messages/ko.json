@@ -20,7 +20,8 @@
     "description": "파일 공유와 텍스트 공유를 전환해서 사용할 수 있습니다.",
     "file": "파일",
     "text": "텍스트",
-    "uploadFailed": "업로드에 실패했습니다."
+    "uploadFailed": "업로드에 실패했습니다.",
+    "uploadTooLarge": "업로드 총 용량은 {maxSize} 이하여야 합니다."
   },
   "Receive": {
     "title": "공유 열기",
@@ -32,7 +33,7 @@
   },
   "UploadZone": {
     "title": "파일을 끌어놓거나 클릭해서 선택하세요.",
-    "description": "여러 파일을 올릴 수 있고, 파일당 최대 {maxSize}까지 지원합니다."
+    "description": "여러 파일을 합쳐 최대 {maxSize}까지 올릴 수 있습니다."
   },
   "FileList": {
     "summary": "파일 {count}개 / {size}",

@@ -20,7 +20,8 @@
     "description": "Switch between file sharing and text sharing as needed.",
     "file": "File",
     "text": "Text",
-    "uploadFailed": "Upload failed."
+    "uploadFailed": "Upload failed.",
+    "uploadTooLarge": "Total upload size must be {maxSize} or less."
   },
   "Receive": {
     "title": "Open share",
@@ -32,7 +33,7 @@
   },
   "UploadZone": {
     "title": "Drop files here or click to choose.",
-    "description": "You can add multiple files. Each file can be up to {maxSize}."
+    "description": "You can add multiple files up to {maxSize} total."
   },
   "FileList": {
     "summary": "{count} files / {size}",

@@ -5,7 +5,7 @@ import path from "path";
 // 여기 값을 바꾸면 업로드/공유 동작 전반에 반영됩니다.
 // ============================================================
 
-/** 파일당 최대 업로드 크기 (bytes). 기본값 5GB */
+/** 한 번에 업로드할 수 있는 전체 파일 크기 합계 (bytes). 기본값 5GB */
 export const MAX_FILE_SIZE =
   Number(process.env.MAX_FILE_SIZE) || 5 * 1024 * 1024 * 1024;
 
