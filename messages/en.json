@@ -6,7 +6,11 @@
   "Home": {
     "heroDescription": "Share files or text quickly without signing in.",
     "sendTab": "Send",
-    "receiveTab": "Receive"
+    "receiveTab": "Receive",
+    "migrationBadge": "Site address changed",
+    "migrationNotice": "The site address has changed to {host}.",
+    "migrationExpiry": "The old domain expires on 2026-08-27.",
+    "migrationDismiss": "Dismiss notice"
   },
   "Language": {
     "label": "Select language",

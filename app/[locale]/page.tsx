@@ -1,7 +1,9 @@
 "use client";
 
+import { Suspense } from "react";
 import { useTranslations } from "next-intl";
 import HomeHero from "@/components/home/HomeHero";
+import MigrationNotice from "@/components/home/MigrationNotice";
 import ReceiveTabContent from "@/components/home/ReceiveTabContent";
 import SendTabContent from "@/components/home/SendTabContent";
 import UploadHistory from "@/components/home/UploadHistory";
@@ -18,6 +20,9 @@ export default function HomePage() {
       />
 
       <div className="relative z-10 w-full max-w-lg min-w-0">
+        <Suspense fallback={null}>
+          <MigrationNotice />
+        </Suspense>
         <HomeHero />
 
         <Tabs defaultValue="send" className="w-full">

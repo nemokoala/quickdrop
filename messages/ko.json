@@ -6,7 +6,11 @@
   "Home": {
     "heroDescription": "로그인 없이 파일이나 텍스트를 빠르게 공유하세요.",
     "sendTab": "공유하기",
-    "receiveTab": "가져오기"
+    "receiveTab": "가져오기",
+    "migrationBadge": "사이트 주소 변경",
+    "migrationNotice": "사이트 주소가 {host}(으)로 변경되었습니다.",
+    "migrationExpiry": "기존 도메인은 2026-08-27에 만료됩니다.",
+    "migrationDismiss": "안내 닫기"
   },
   "Language": {
     "label": "언어 선택",
