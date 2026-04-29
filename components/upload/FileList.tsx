@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
+import TermsConsent from "@/components/upload/TermsConsent";
 import { formatBytes } from "@/lib/format";
 import {
   formatUploadExpiryMinutes,
@@ -25,7 +26,9 @@ interface FileListProps {
   progress: UploadProgress | null;
   isUploading: boolean;
   expiryMinutes: number;
+  termsAccepted: boolean;
   onExpiryChange: (minutes: number) => void;
+  onTermsAcceptedChange: (accepted: boolean) => void;
   onRemove: (index: number) => void;
   onUpload: () => void;
   onReset: () => void;
@@ -36,7 +39,9 @@ export default function FileList({
   progress,
   isUploading,
   expiryMinutes,
+  termsAccepted,
   onExpiryChange,
+  onTermsAcceptedChange,
   onRemove,
   onUpload,
   onReset,
@@ -167,9 +172,21 @@ export default function FileList({
         )}
 
         {!isUploading && (
-          <Button onClick={onUpload} className="w-full" size="lg">
-            {t("upload")}
-          </Button>
+          <>
+            <TermsConsent
+              checked={termsAccepted}
+              disabled={isUploading}
+              onCheckedChange={onTermsAcceptedChange}
+            />
+            <Button
+              onClick={onUpload}
+              disabled={!termsAccepted}
+              className="w-full"
+              size="lg"
+            >
+              {t("upload")}
+            </Button>
+          </>
         )}
       </div>
 

@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import TermsConsent from "@/components/upload/TermsConsent";
 import { MAX_TEXT_BYTES, MAX_TEXT_BYTES_LABEL } from "@/lib/config";
 import { formatBytes } from "@/lib/format";
 import {
@@ -17,9 +18,11 @@ interface TextUploadFormProps {
   content: string;
   expiryMinutes: number;
   isUploading: boolean;
+  termsAccepted: boolean;
   onTitleChange: (value: string) => void;
   onContentChange: (value: string) => void;
   onExpiryChange: (minutes: number) => void;
+  onTermsAcceptedChange: (accepted: boolean) => void;
   onUpload: () => void;
   onReset: () => void;
 }
@@ -29,9 +32,11 @@ export default function TextUploadForm({
   content,
   expiryMinutes,
   isUploading,
+  termsAccepted,
   onTitleChange,
   onContentChange,
   onExpiryChange,
+  onTermsAcceptedChange,
   onUpload,
   onReset,
 }: TextUploadFormProps) {
@@ -39,7 +44,8 @@ export default function TextUploadForm({
   const t = useTranslations("TextUpload");
   const textSize = new TextEncoder().encode(content).length;
   const isTooLarge = textSize > MAX_TEXT_BYTES;
-  const canUpload = content.trim().length > 0 && !isUploading && !isTooLarge;
+  const canUpload =
+    content.trim().length > 0 && !isUploading && !isTooLarge && termsAccepted;
   const duration = formatUploadExpiryMinutes(expiryMinutes, locale);
 
   return (
@@ -124,10 +130,16 @@ export default function TextUploadForm({
         />
 
         <div className="mt-2 flex justify-between text-xs text-muted-foreground">
-          <span>{locale === "en" ? "30 min" : "30분"}</span>
-          <span>{locale === "en" ? "3 hours" : "3시간"}</span>
+          <span>{t("minDuration")}</span>
+          <span>{t("maxDuration")}</span>
         </div>
       </div>
+
+      <TermsConsent
+        checked={termsAccepted}
+        disabled={isUploading}
+        onCheckedChange={onTermsAcceptedChange}
+      />
 
       <Button onClick={onUpload} disabled={!canUpload} className="w-full" size="lg">
         {isUploading ? t("uploading") : t("submit")}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import FileList from "@/components/upload/FileList";
@@ -26,6 +26,7 @@ import type { UploadResult } from "@/types/quickdrop";
 
 export default function SendTabContent() {
   const t = useTranslations("Send");
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const {
     mode,
     setMode,
@@ -74,11 +75,17 @@ export default function SendTabContent() {
   const handleReset = useCallback(() => {
     resetDraft();
     resetUpload();
+    setTermsAccepted(false);
   }, [resetDraft, resetUpload]);
 
   const handleUpload = useCallback(async () => {
     try {
       let nextResult: UploadResult;
+
+      if (!termsAccepted) {
+        toast.error(t("termsRequired"));
+        return;
+      }
 
       if (mode === "file") {
         if (files.length === 0) return;
@@ -114,6 +121,7 @@ export default function SendTabContent() {
     uploadFiles,
     uploadText,
     setResult,
+    termsAccepted,
   ]);
 
   return (
@@ -163,9 +171,11 @@ export default function SendTabContent() {
                   progress={progress}
                   isUploading={isUploading}
                   expiryMinutes={expiryMinutes}
+                  termsAccepted={termsAccepted}
                   onExpiryChange={(value) =>
                     setExpiryMinutes(clampUploadExpiryMinutes(value))
                   }
+                  onTermsAcceptedChange={setTermsAccepted}
                   onRemove={handleRemove}
                   onUpload={handleUpload}
                   onReset={handleReset}
@@ -177,11 +187,13 @@ export default function SendTabContent() {
                 content={textContent}
                 expiryMinutes={expiryMinutes}
                 isUploading={isUploading}
+                termsAccepted={termsAccepted}
                 onTitleChange={setTextTitle}
                 onContentChange={setTextContent}
                 onExpiryChange={(value) =>
                   setExpiryMinutes(clampUploadExpiryMinutes(value))
                 }
+                onTermsAcceptedChange={setTermsAccepted}
                 onUpload={handleUpload}
                 onReset={handleReset}
               />

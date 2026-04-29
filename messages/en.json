@@ -21,7 +21,8 @@
     "file": "File",
     "text": "Text",
     "uploadFailed": "Upload failed.",
-    "uploadTooLarge": "Total upload size must be {maxSize} or less."
+    "uploadTooLarge": "Total upload size must be {maxSize} or less.",
+    "termsRequired": "Please agree to the terms and privacy policy before uploading."
   },
   "Receive": {
     "title": "Open share",
@@ -60,8 +61,83 @@
     "expiryTitle": "Expiration",
     "expiryDescription": "Automatically deleted {duration} after upload",
     "expiryAria": "Text expiration time",
+    "minDuration": "30 min",
+    "maxDuration": "3 hours",
     "uploading": "Uploading...",
     "submit": "Share text"
+  },
+  "LegalConsent": {
+    "agreement": "I agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy> before uploading."
+  },
+  "TermsPage": {
+    "title": "Terms of Service",
+    "updatedAt": "Effective date: April 29, 2026",
+    "backHome": "Back to QuickDrop",
+    "sections": [
+      {
+        "title": "1. Service use",
+        "body": [
+          "QuickDrop is a temporary file and text sharing service that can be used without signing in.",
+          "Uploaded files and shared text are provided through a share code or link until they expire."
+        ]
+      },
+      {
+        "title": "2. User responsibility",
+        "body": [
+          "You are responsible for the content you upload or share.",
+          "Do not upload illegal content, malware, spam, content that infringes rights, or files that you are not allowed to share."
+        ]
+      },
+      {
+        "title": "3. Storage and deletion",
+        "body": [
+          "Shared content is automatically deleted after the expiration time selected during upload.",
+          "QuickDrop may delete uploaded content earlier when required for security, abuse prevention, maintenance, or legal compliance."
+        ]
+      },
+      {
+        "title": "4. Availability",
+        "body": [
+          "QuickDrop is provided as available. Temporary interruption, download failure, or data loss may occur due to network issues, server errors, maintenance, or external services.",
+          "Keep your own backup of important files before uploading."
+        ]
+      }
+    ]
+  },
+  "PrivacyPage": {
+    "title": "Privacy Policy",
+    "updatedAt": "Effective date: April 29, 2026",
+    "backHome": "Back to QuickDrop",
+    "sections": [
+      {
+        "title": "1. Personal data we process",
+        "body": [
+          "QuickDrop may process uploaded files, shared text, file names, file sizes, share codes, expiration times, IP addresses, browser information, request logs, and error logs.",
+          "Uploaded content may contain personal data depending on what you choose to share."
+        ]
+      },
+      {
+        "title": "2. Purpose of processing",
+        "body": [
+          "We use this data to provide upload, text sharing, download, QR code, expiration, security, abuse prevention, and service operation features.",
+          "Request and error logs are used to diagnose failures, protect the service, and respond to misuse."
+        ]
+      },
+      {
+        "title": "3. Retention",
+        "body": [
+          "Uploaded content is retained until the selected expiration time and then deleted.",
+          "Operational logs may be kept for the minimum period needed for security, troubleshooting, and legal compliance."
+        ]
+      },
+      {
+        "title": "4. Third parties and contact",
+        "body": [
+          "Infrastructure, hosting, storage, analytics, or notification providers may process data only as needed to operate QuickDrop.",
+          "For deletion or privacy requests, contact the service operator through the contact channel provided by QuickDrop."
+        ]
+      }
+    ]
   },
   "ShareResult": {
     "instruction": "Send the code or link below to the recipient.",
