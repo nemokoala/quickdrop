@@ -18,7 +18,7 @@ export default function DownloadActions({
   const handleDownloadAll = () => {
     const anchor = document.createElement("a");
     anchor.href = `/api/download-all/${code}`;
-    anchor.download = `quickdrop-${code}.zip`;
+    anchor.download = `nemodrop-${code}.zip`;
     anchor.click();
   };
 

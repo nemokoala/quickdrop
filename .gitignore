@@ -42,7 +42,7 @@ next-env.d.ts
 
 /app/generated/prisma
 
-# QuickDrop
+# NemoDrop
 /uploads
 /prisma/dev.db
 /prisma/dev.db-journal

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import type { UploadProgress, UploadResult } from "@/types/quickdrop";
+import type { UploadProgress, UploadResult } from "@/types/nemodrop";
 
 interface UseUploadReturn {
   uploadFiles: (files: File[], expiryMinutes: number) => Promise<UploadResult>;

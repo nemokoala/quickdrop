@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { BASE_URL } from "@/lib/config";
 import { formatBytes, formatExpiry } from "@/lib/format";
-import type { UploadResult } from "@/types/quickdrop";
+import type { UploadResult } from "@/types/nemodrop";
 
 interface ShareResultProps {
   result: UploadResult;

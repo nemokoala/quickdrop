@@ -63,7 +63,7 @@ export async function GET(
   return new NextResponse(webStream, {
     headers: {
       "Content-Type": "application/zip",
-      "Content-Disposition": `attachment; filename="quickdrop-${code}.zip"`,
+      "Content-Disposition": `attachment; filename="nemodrop-${code}.zip"`,
     },
   });
 }

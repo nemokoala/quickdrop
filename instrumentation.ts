@@ -15,6 +15,6 @@ export async function register() {
       }
     });
 
-    console.log("[quickdrop] Cleanup cron registered (every hour)");
+    console.log("[nemodrop] Cleanup cron registered (every hour)");
   }
 }

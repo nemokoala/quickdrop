@@ -1,6 +1,6 @@
 {
   "Meta": {
-    "title": "QuickDrop",
+    "title": "NemoDrop",
     "description": "Share files or text quickly without signing in."
   },
   "Home": {
@@ -72,12 +72,12 @@
   "TermsPage": {
     "title": "Terms of Service",
     "updatedAt": "Effective date: April 29, 2026",
-    "backHome": "Back to QuickDrop",
+    "backHome": "Back to NemoDrop",
     "sections": [
       {
         "title": "1. Service use",
         "body": [
-          "QuickDrop is a temporary file and text sharing service that can be used without signing in.",
+          "NemoDrop is a temporary file and text sharing service that can be used without signing in.",
           "Uploaded files and shared text are provided through a share code or link until they expire."
         ]
       },
@@ -92,13 +92,13 @@
         "title": "3. Storage and deletion",
         "body": [
           "Shared content is automatically deleted after the expiration time selected during upload.",
-          "QuickDrop may delete uploaded content earlier when required for security, abuse prevention, maintenance, or legal compliance."
+          "NemoDrop may delete uploaded content earlier when required for security, abuse prevention, maintenance, or legal compliance."
         ]
       },
       {
         "title": "4. Availability",
         "body": [
-          "QuickDrop is provided as available. Temporary interruption, download failure, or data loss may occur due to network issues, server errors, maintenance, or external services.",
+          "NemoDrop is provided as available. Temporary interruption, download failure, or data loss may occur due to network issues, server errors, maintenance, or external services.",
           "Keep your own backup of important files before uploading."
         ]
       }
@@ -107,12 +107,12 @@
   "PrivacyPage": {
     "title": "Privacy Policy",
     "updatedAt": "Effective date: April 29, 2026",
-    "backHome": "Back to QuickDrop",
+    "backHome": "Back to NemoDrop",
     "sections": [
       {
         "title": "1. Personal data we process",
         "body": [
-          "QuickDrop may process uploaded files, shared text, file names, file sizes, share codes, expiration times, IP addresses, browser information, request logs, and error logs.",
+          "NemoDrop may process uploaded files, shared text, file names, file sizes, share codes, expiration times, IP addresses, browser information, request logs, and error logs.",
           "Uploaded content may contain personal data depending on what you choose to share."
         ]
       },
@@ -133,8 +133,8 @@
       {
         "title": "4. Third parties and contact",
         "body": [
-          "Infrastructure, hosting, storage, analytics, or notification providers may process data only as needed to operate QuickDrop.",
-          "For deletion or privacy requests, contact the service operator through the contact channel provided by QuickDrop."
+          "Infrastructure, hosting, storage, analytics, or notification providers may process data only as needed to operate NemoDrop.",
+          "For deletion or privacy requests, contact the service operator through the contact channel provided by NemoDrop."
         ]
       }
     ]
@@ -173,7 +173,7 @@
     "codeTitle": "Code not found",
     "codeDescription": "The share code you entered is invalid, or the files may have already expired and been deleted.",
     "home": "Back home",
-    "securityNote": "For security, QuickDrop permanently deletes shared files from the system after they expire.",
+    "securityNote": "For security, NemoDrop permanently deletes shared files from the system after they expire.",
     "pageTitle": "Lost your way?",
     "pageDescription": "The requested page could not be found. Check the address and try again."
   },

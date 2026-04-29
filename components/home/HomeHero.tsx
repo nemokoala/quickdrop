@@ -17,7 +17,7 @@ export default function HomeHero() {
         height={72}
         className="mx-auto mb-4 h-18 w-18 rounded-2xl ring-1 ring-primary/30 shadow-xl shadow-primary/25"
       />
-      <h1 className="text-4xl font-bold tracking-tight">QuickDrop</h1>
+      <h1 className="text-4xl font-bold tracking-tight">NemoDrop</h1>
       <p className="mt-2 text-muted-foreground">{t("heroDescription")}</p>
       <LanguageToggle />
     </div>

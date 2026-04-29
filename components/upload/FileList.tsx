@@ -19,7 +19,7 @@ import {
   MIN_UPLOAD_EXPIRY_MINUTES,
   UPLOAD_EXPIRY_STEP_MINUTES,
 } from "@/lib/upload-expiry";
-import type { UploadProgress } from "@/types/quickdrop";
+import type { UploadProgress } from "@/types/nemodrop";
 
 interface FileListProps {
   files: File[];

@@ -1,24 +1,24 @@
-# QuickDrop
+# NemoDrop
 
-QuickDrop은 로그인 없이 파일이나 텍스트를 빠르게 공유하는 임시 공유 서비스입니다. 업로드하면 6자리 공유 코드, 공유 링크, QR 코드가 생성되고, 받는 사람은 코드나 링크로 접속해 파일을 내려받거나 공유된 텍스트를 복사할 수 있습니다.
+NemoDrop은 로그인 없이 파일이나 텍스트를 빠르게 공유하는 임시 공유 서비스입니다. 업로드하면 6자리 공유 코드, 공유 링크, QR 코드가 생성되고, 받는 사람은 코드나 링크로 접속해 파일을 내려받거나 공유된 텍스트를 복사할 수 있습니다.
 
 ## 화면 캡처
 
 ### 홈 화면/업로드 화면
 
-![QuickDrop 홈 화면](./docs/images/quickdrop-home.png)
+![NemoDrop 홈 화면](./docs/images/nemodrop-home.png)
 
 ### 공유 코드/QR 화면
 
-![QuickDrop 공유 코드와 QR 화면](./docs/images/quickdrop-share-qr.png)
+![NemoDrop 공유 코드와 QR 화면](./docs/images/nemodrop-share-qr.png)
 
 ### 파일 다운로드 화면
 
-![QuickDrop 파일 다운로드 화면](./docs/images/quickdrop-file-download.png)
+![NemoDrop 파일 다운로드 화면](./docs/images/nemodrop-file-download.png)
 
 ### 텍스트 다운로드 화면
 
-![QuickDrop 다운로드 화면](./docs/images/quickdrop-download.png)
+![NemoDrop 다운로드 화면](./docs/images/nemodrop-download.png)
 
 ## 주요 기능
 

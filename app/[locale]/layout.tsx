@@ -39,7 +39,7 @@ export async function generateMetadata({
       title: t("title"),
       description: t("description"),
       url: `/${locale}`,
-      siteName: "QuickDrop",
+      siteName: "NemoDrop",
       locale: locale === "ko" ? "ko_KR" : "en_US",
       alternateLocale: locale === "ko" ? ["en_US"] : ["ko_KR"],
       type: "website",

@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Download, FileIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatBytes } from "@/lib/format";
-import type { FileInfo } from "@/types/quickdrop";
+import type { FileInfo } from "@/types/nemodrop";
 
 interface FileTableProps {
   files: FileInfo[];

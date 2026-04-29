@@ -1,10 +1,11 @@
 "use client";
 
-import type { UploadResult } from "@/types/quickdrop";
+import type { UploadResult } from "@/types/nemodrop";
 
-export const UPLOAD_HISTORY_EVENT = "quickdrop-upload-history-change";
+export const UPLOAD_HISTORY_EVENT = "nemodrop-upload-history-change";
 
-const STORAGE_KEY = "quickdrop.uploadHistory.v1";
+const LEGACY_STORAGE_KEY = "quickdrop.uploadHistory.v1";
+const STORAGE_KEY = "nemodrop.uploadHistory.v1";
 const MAX_HISTORY_ITEMS = 10;
 
 export interface UploadHistoryItem {
@@ -79,12 +80,17 @@ export function getUploadHistory(): UploadHistoryItem[] {
   if (!canUseStorage()) return [];
 
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]");
+    const rawItems =
+      window.localStorage.getItem(STORAGE_KEY) ||
+      window.localStorage.getItem(LEGACY_STORAGE_KEY) ||
+      "[]";
+    const parsed = JSON.parse(rawItems);
     const items = Array.isArray(parsed)
       ? parsed.filter(isUploadHistoryItem).filter(isActive)
       : [];
 
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    window.localStorage.removeItem(LEGACY_STORAGE_KEY);
 
     return items;
   } catch {

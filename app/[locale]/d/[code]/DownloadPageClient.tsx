@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatBytes, formatExpiry } from "@/lib/format";
-import type { FileInfo, SessionKind, TextInfo } from "@/types/quickdrop";
+import type { FileInfo, SessionKind, TextInfo } from "@/types/nemodrop";
 
 interface Props {
   code: string;
@@ -55,7 +55,7 @@ export default function DownloadPageClient({
             height={72}
             className="mx-auto mb-4 h-18 w-18 rounded-2xl shadow-lg shadow-primary/15"
           />
-          <h1 className="text-4xl font-bold tracking-tight">QuickDrop</h1>
+          <h1 className="text-4xl font-bold tracking-tight">NemoDrop</h1>
           <p className="mt-2 text-muted-foreground">
             {kind === "text" ? t("sharedText") : t("receiveFile")}
           </p>

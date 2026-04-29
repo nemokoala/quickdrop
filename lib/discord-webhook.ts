@@ -92,7 +92,7 @@ export async function sendDiscordLog(event: DiscordLogEvent): Promise<void> {
 
 function buildDiscordPayload(event: DiscordLogEvent) {
   const isUpload = event.type === "upload";
-  const title = isUpload ? "QuickDrop upload" : "QuickDrop download";
+  const title = isUpload ? "NemoDrop upload" : "NemoDrop download";
   const color = isUpload ? 0x22c55e : 0x3b82f6;
   const fields: DiscordEmbedField[] = [
     { name: "Code", value: event.code, inline: true },
@@ -156,7 +156,7 @@ function buildDiscordPayload(event: DiscordLogEvent) {
   }
 
   return {
-    username: "QuickDrop",
+    username: "NemoDrop",
     embeds: [
       {
         title,

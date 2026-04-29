@@ -22,7 +22,7 @@ import { MAX_FILE_SIZE, MAX_FILE_SIZE_LABEL } from "@/lib/config";
 import { saveUploadHistory } from "@/lib/upload-history";
 import { useHomeSendDraft } from "@/providers/HomeSendDraftProvider";
 import { useUpload } from "@/queries/upload/mutations";
-import type { UploadResult } from "@/types/quickdrop";
+import type { UploadResult } from "@/types/nemodrop";
 
 export default function SendTabContent() {
   const t = useTranslations("Send");

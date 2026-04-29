@@ -10,7 +10,7 @@ interface PageProps {
 
 export function generateMetadata(): Metadata {
   return {
-    title: "QuickDrop",
+    title: "NemoDrop",
     robots: {
       index: false,
       follow: false,

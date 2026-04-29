@@ -9,7 +9,7 @@ import {
   type SetStateAction,
 } from "react";
 import { DEFAULT_UPLOAD_EXPIRY_MINUTES } from "@/lib/upload-expiry";
-import type { SessionKind, UploadResult } from "@/types/quickdrop";
+import type { SessionKind, UploadResult } from "@/types/nemodrop";
 
 interface HomeSendDraftContextValue {
   mode: SessionKind;
