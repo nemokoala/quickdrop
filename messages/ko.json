@@ -44,7 +44,7 @@
     "summary": "파일 {count}개 / {size}",
     "removeAll": "모두 제거",
     "expiryTitle": "만료 시간",
-    "expiryDescription": "업로드 후 {duration} 뒤 자동 삭제",
+    "expiryDescription": "업로드 후 {duration} 뒤 만료되며 정기 정리 작업에서 삭제",
     "expiryAria": "업로드 만료 시간",
     "minDuration": "30분",
     "maxDuration": "3시간",
@@ -63,7 +63,7 @@
     "contentLimit": " / 제한 {maxSize}",
     "contentPlaceholder": "공유할 텍스트를 붙여넣거나 직접 입력하세요.",
     "expiryTitle": "만료 시간",
-    "expiryDescription": "업로드 후 {duration} 뒤 자동 삭제",
+    "expiryDescription": "업로드 후 {duration} 뒤 만료되며 정기 정리 작업에서 삭제",
     "expiryAria": "텍스트 만료 시간",
     "minDuration": "30분",
     "maxDuration": "3시간",
@@ -95,7 +95,7 @@
       {
         "title": "3. 보관 및 삭제",
         "body": [
-          "공유 콘텐츠는 업로드 시 선택한 만료 시간이 지나면 자동 삭제됩니다.",
+          "공유 콘텐츠는 업로드 시 선택한 만료 시간이 지나면 접근할 수 없으며 정기 정리 작업에서 삭제됩니다.",
           "NemoDrop은 보안, 오남용 방지, 점검, 법령 준수를 위해 필요한 경우 업로드 콘텐츠를 더 일찍 삭제할 수 있습니다."
         ]
       },
@@ -130,7 +130,7 @@
       {
         "title": "3. 보관 기간",
         "body": [
-          "업로드 콘텐츠는 선택한 만료 시간까지 보관된 뒤 삭제됩니다.",
+          "업로드 콘텐츠는 선택한 만료 시간까지 보관되고, 만료 후 접근할 수 없으며 정기 정리 작업에서 삭제됩니다.",
           "운영 로그는 보안, 문제 해결, 법령 준수에 필요한 최소 기간 동안 보관될 수 있습니다."
         ]
       },
@@ -165,7 +165,7 @@
     "sharedText": "공유된 텍스트",
     "receiveFile": "파일 받기",
     "expiredTitle": "이 공유 코드는 만료되었습니다.",
-    "expiredDescription": "공유된 내용은 만료 후 자동으로 삭제됩니다.",
+    "expiredDescription": "공유된 내용은 만료 후 접근할 수 없으며 정기 정리 작업에서 삭제됩니다.",
     "copied": "복사됨",
     "copyText": "텍스트 복사",
     "fileSummary": "파일 {count}개 / {size}",
@@ -177,7 +177,7 @@
     "codeTitle": "코드를 찾을 수 없습니다",
     "codeDescription": "입력하신 공유 코드가 유효하지 않거나 파일이 이미 만료되어 삭제되었을 수 있습니다.",
     "home": "홈으로 돌아가기",
-    "securityNote": "NemoDrop은 보안을 위해 공유된 파일을 만료 후 시스템에서 영구 삭제합니다.",
+    "securityNote": "NemoDrop은 보안을 위해 만료된 공유 파일 접근을 차단하고 정기 정리 작업에서 영구 삭제합니다.",
     "pageTitle": "길을 잃으셨나요?",
     "pageDescription": "요청하신 페이지를 찾을 수 없습니다. 주소가 정확한지 다시 확인해주세요."
   },

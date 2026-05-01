@@ -44,7 +44,7 @@
     "summary": "{count} files / {size}",
     "removeAll": "Remove all",
     "expiryTitle": "Expiration",
-    "expiryDescription": "Automatically deleted {duration} after upload",
+    "expiryDescription": "Expires {duration} after upload and is deleted during scheduled cleanup",
     "expiryAria": "Upload expiration time",
     "minDuration": "30 min",
     "maxDuration": "3 hours",
@@ -63,7 +63,7 @@
     "contentLimit": " / limit {maxSize}",
     "contentPlaceholder": "Paste or type the text you want to share.",
     "expiryTitle": "Expiration",
-    "expiryDescription": "Automatically deleted {duration} after upload",
+    "expiryDescription": "Expires {duration} after upload and is deleted during scheduled cleanup",
     "expiryAria": "Text expiration time",
     "minDuration": "30 min",
     "maxDuration": "3 hours",
@@ -95,7 +95,7 @@
       {
         "title": "3. Storage and deletion",
         "body": [
-          "Shared content is automatically deleted after the expiration time selected during upload.",
+          "Shared content becomes inaccessible after the expiration time selected during upload and is deleted during scheduled cleanup.",
           "NemoDrop may delete uploaded content earlier when required for security, abuse prevention, maintenance, or legal compliance."
         ]
       },
@@ -130,7 +130,7 @@
       {
         "title": "3. Retention",
         "body": [
-          "Uploaded content is retained until the selected expiration time and then deleted.",
+          "Uploaded content is retained until the selected expiration time, becomes inaccessible after expiration, and is deleted during scheduled cleanup.",
           "Operational logs may be kept for the minimum period needed for security, troubleshooting, and legal compliance."
         ]
       },
@@ -165,7 +165,7 @@
     "sharedText": "Shared text",
     "receiveFile": "Receive files",
     "expiredTitle": "This share code has expired.",
-    "expiredDescription": "Shared content is automatically deleted after it expires.",
+    "expiredDescription": "Shared content is no longer accessible after expiration and is deleted during scheduled cleanup.",
     "copied": "Copied",
     "copyText": "Copy text",
     "fileSummary": "{count} files / {size}",
@@ -177,7 +177,7 @@
     "codeTitle": "Code not found",
     "codeDescription": "The share code you entered is invalid, or the files may have already expired and been deleted.",
     "home": "Back home",
-    "securityNote": "For security, NemoDrop permanently deletes shared files from the system after they expire.",
+    "securityNote": "For security, NemoDrop blocks access to expired shared files and permanently deletes them during scheduled cleanup.",
     "pageTitle": "Lost your way?",
     "pageDescription": "The requested page could not be found. Check the address and try again."
   },
