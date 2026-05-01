@@ -8,7 +8,8 @@
     "sendTab": "Send",
     "receiveTab": "Receive",
     "migrationBadge": "Site address changed",
-    "migrationNotice": "The site address has changed to {host}.",
+    "migrationNoticeLead": "The site address has changed to ",
+    "migrationNoticeTail": ".",
     "migrationExpiry": "The old domain expires on 2026-08-27.",
     "migrationDismiss": "Dismiss notice"
   },
