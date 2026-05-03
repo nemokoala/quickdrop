@@ -103,11 +103,43 @@
 }
 
 html {
+  overflow-y: scroll;
   scrollbar-gutter: stable;
+  scrollbar-width: auto;
+  scrollbar-color: oklch(0.68 0.16 258) transparent;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+html > body[data-scroll-locked][data-scroll-locked] {
+  margin-right: 0 !important;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: oklch(0.68 0.16 258 / 65%);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: oklch(0.58 0.2 259 / 85%);
+}
+
+.thin-blue-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.68 0.16 258 / 75%) transparent;
 }

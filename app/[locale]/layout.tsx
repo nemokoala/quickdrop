@@ -50,9 +50,9 @@ export async function generateMetadata({
       description: t("description"),
     },
     icons: {
-      icon: "/icon.svg",
-      shortcut: "/icon.svg",
-      apple: "/icon.svg",
+      icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+      shortcut: [{ url: "/icon.svg", type: "image/svg+xml" }],
+      apple: [{ url: "/icon.svg", type: "image/svg+xml" }],
     },
   };
 }

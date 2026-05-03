@@ -87,7 +87,7 @@ export default function FileList({
           )}
         </div>
 
-        <ul className="flex max-h-60 flex-col gap-2 overflow-y-auto">
+        <ul className="thin-blue-scrollbar flex max-h-60 flex-col gap-2 overflow-y-auto pr-1">
           {files.map((file, index) => {
             const previewUrl = previews[`${file.name}-${file.size}`];
 

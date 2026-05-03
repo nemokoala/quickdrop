@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import LegalContent, { type LegalSection } from "@/components/legal/LegalContent";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import LegalContent, {
+  type LegalSection,
+} from "@/components/legal/LegalContent";
 
 type LegalModal = "terms" | "privacy";
 
@@ -31,7 +29,9 @@ function LegalModalContent({ type }: { type: LegalModal }) {
         updatedAt={t("updatedAt")}
         sections={sections}
         fullPageHref={`/${locale}/${type}`}
-        fullPageLabel={locale === "ko" ? "전체 페이지로 열기" : "Open full page"}
+        fullPageLabel={
+          locale === "ko" ? "전체 페이지로 열기" : "Open full page"
+        }
         scrollable
       />
     </>
@@ -66,7 +66,10 @@ export default function TermsConsent({
           className="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-primary disabled:cursor-not-allowed"
           aria-describedby="upload-legal-consent-description"
         />
-        <span id="upload-legal-consent-description" className="text-muted-foreground">
+        <span
+          id="upload-legal-consent-description"
+          className="text-muted-foreground"
+        >
           {t.rich("agreement", {
             terms: (chunks) => (
               <button
@@ -94,7 +97,7 @@ export default function TermsConsent({
         open={openModal !== null}
         onOpenChange={(open) => !open && setOpenModal(null)}
       >
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl px-4 py-10">
           {openModal && <LegalModalContent type={openModal} />}
         </DialogContent>
       </Dialog>
